@@ -73,19 +73,6 @@
 			</modules>
 		</profile>
 	</profiles>
-<!--
-	<scm>
-		<connection>scm:git:https://roberto.bezzi@stash.mirriad.com/scm/ad/adbroker.git</connection>
-		<developerConnection>scm:git:https://roberto.bezzi@stash.mirriad.com/scm/ad/adbroker.git</developerConnection>
-	</scm>
--->
-	<distributionManagement>
-		<repository>
-			<id>alex-desktop</id>
-			<name>alex-desktop-releases</name>
-			<url>http://10.42.0.1:8081/artifactory/libs-releases-local</url>
-		</repository>
-	</distributionManagement>
 	
 	<repositories>
 		<repository>
@@ -103,11 +90,6 @@
 			<id>jboss</id>
 			<name>JBoss Repository</name>
 			<url>http://repository.jboss.org/nexus/content/groups/public</url>
-		</repository>
-		<repository>
-			<id>alex-desktop</id>
-			<name>alex-desktop-releases</name>
-			<url>http://10.42.0.1:8081/artifactory/libs-releases-local</url>
 		</repository>
 		<repository>
 			<id>lambdaj</id>
@@ -150,11 +132,6 @@
 			<name>JBoss Public Maven Repository Group</name>
 			<url>https://repository.jboss.org/nexus/content/groups/public-jboss/
 			</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>alex-desktop</id>
-			<name>alex-desktop-releases</name>
-			<url>http://10.42.0.1:8081/artifactory/plugins-releases-local</url>
 		</pluginRepository>
 		<pluginRepository>
 			<id>maven2.java.net</id>
