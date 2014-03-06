@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+	<appender name="A-STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- %l generation is extremely slow! -->
+			<param name="ConversionPattern" value="%d{DATE} [%t]: %l %p %x - %m %n" />
+		</layout>
+	</appender>
+
+	<logger name="com.mirriad" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="A-STDOUT" />
+	</logger>
+
+	<logger name="com.mirriad.file.utils" additivity="false">
+		<level value="info" />
+		<appender-ref ref="A-STDOUT" />
+	</logger>
+
+	<logger name="org.springframework" additivity="false">
+		<level value="info" />
+		<appender-ref ref="A-STDOUT" />
+	</logger>
+
+	<logger name="org.hibernate" additivity="false">
+		<level value="info" />
+		<appender-ref ref="A-STDOUT" />
+	</logger>
+	
+	<root>
+		<level value="info" />
+		<appender-ref ref="A-STDOUT" />
+	</root>
+</log4j:configuration>

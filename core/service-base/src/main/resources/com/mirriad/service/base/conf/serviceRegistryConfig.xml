@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+       http://www.springframework.org/schema/util 
+       http://www.springframework.org/schema/util/spring-util-3.0.xsd" 
+       xmlns:util="http://www.springframework.org/schema/util">
+
+	<bean id="dbProperties"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="file:${properties.location}/services.properties" />
+		<!-- Allow other PropertyPlaceholderConfigurer to run as well -->
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+	
+	<bean id="serviceRegistry" class="com.openshare.service.base.registry.ServiceRegistry" scope="singleton">
+		<property name="serviceEntries" ref="indexEntityMapBean"/>
+	</bean>
+
+	<util:map id="indexEntityMapBean" 
+	       map-class="java.util.HashMap" 
+	       key-type="com.openshare.service.base.ServicesEnum" 
+	       value-type="com.openshare.service.base.registry.ServiceEntry">
+		<!-- ingest entry -->
+		<entry key="INGEST">
+			<bean class="com.openshare.service.base.registry.ServiceEntry">
+				<property name="endPoint" value="${ingest.endpoint}" />
+				<property name="root" value="${ingest.api.root}"/>
+				<property name="port" value="${ingest.port}" />
+				<property name="secure" value="${ingest.secure}" />
+				<property name="external" value="${ingest.external}"/>
+				<property name="clientReadTimeoutInSeconds" value="${ingest.timeout.read.seconds:#{null}}"/>
+				<property name="connectTimeOutInSeconds" value="${ingest.timeout.connect.seconds:#{null}}"/>
+			</bean>
+	    </entry>
+		<!-- orchestration entry -->
+		<entry key="ORCHESTRATION">
+			<bean class="com.openshare.service.base.registry.ServiceEntry">
+				<property name="endPoint" value="${orchestration.endpoint}" />
+				<property name="root" value="${orchestration.api.root}"/>
+				<property name="port" value="${orchestration.port}" />
+				<property name="secure" value="${orchestration.secure}" />
+				<property name="external" value="${orchestration.external}"/>
+				<property name="clientReadTimeoutInSeconds" value="${orchestration.timeout.read.seconds:#{null}}"/>
+				<property name="connectTimeOutInSeconds" value="${orchestration.timeout.connect.seconds:#{null}}"/>
+			</bean>
+	    </entry>
+		<!-- delivery entry -->
+		<entry key="DELIVERY">
+			<bean class="com.openshare.service.base.registry.ServiceEntry">
+				<property name="endPoint" value="${delivery.endpoint}" />
+				<property name="root" value="${delivery.api.root}"/>
+				<property name="port" value="${delivery.port}" />
+				<property name="secure" value="${delivery.secure}" />
+				<property name="external" value="${delivery.external}"/>
+				<property name="clientReadTimeoutInSeconds" value="${delivery.timeout.read.seconds:#{null}}"/>
+				<property name="connectTimeOutInSeconds" value="${delivery.timeout.connect.seconds:#{null}}"/>
+			</bean>
+	    </entry>
+		<!-- persistence entry -->
+		<entry key="PERSISTENCE">
+			<bean class="com.openshare.service.base.registry.ServiceEntry">
+				<property name="endPoint" value="${persistence.endpoint}" />
+				<property name="root" value="${persistence.api.root}"/>
+				<property name="port" value="${persistence.port}" />
+				<property name="secure" value="${persistence.secure}" />
+				<property name="external" value="${persistence.external}"/>
+				<property name="clientReadTimeoutInSeconds" value="${persistence.timeout.read.seconds:#{null}}"/>
+				<property name="connectTimeOutInSeconds" value="${persistence.timeout.connect.seconds:#{null}}"/>
+			</bean>
+	    </entry>
+		<!-- file manipulation entry -->
+		<entry key="FILE_MANIPULATION">
+			<bean class="com.openshare.service.base.registry.ServiceEntry">
+				<property name="endPoint" value="${file-manipulation.endpoint}" />
+				<property name="root" value="${file-manipulation.api.root}"/>
+				<property name="port" value="${file-manipulation.port}" />
+				<property name="secure" value="${file-manipulation.secure}" />
+				<property name="external" value="${file-manipulation.external}"/>
+				<property name="prefixList" value="${file-manipulation.prefix.list}"/>
+				<property name="clientReadTimeoutInSeconds" value="${file-manipulation.timeout.read.seconds:#{null}}"/>
+				<property name="connectTimeOutInSeconds" value="${file-manipulation.timeout.connect.seconds:#{null}}"/>
+			</bean>
+	    </entry>
+	    <!--external metadata entry -->
+		<entry key="EXTERNAL_METADATA">
+			<bean class="com.openshare.service.base.registry.ServiceEntry">
+				<property name="endPoint" value="${external-metadata.endpoint}" />
+				<property name="root" value="${external-metadata.api.root}"/>
+				<property name="port" value="${external-metadata.port}" />
+				<property name="secure" value="${external-metadata.secure}" />
+				<property name="external" value="${external-metadata.external}"/>
+				<property name="clientReadTimeoutInSeconds" value="${external-metadata.timeout.read.seconds:#{null}}"/>
+				<property name="connectTimeOutInSeconds" value="${external-metadata.timeout.connect.seconds:#{null}}"/>
+			</bean>
+	    </entry>
+		<!-- file trigger entry -->
+		<entry key="FILE_TRIGGER">
+			<bean class="com.openshare.service.base.registry.ServiceEntry">
+				<property name="endPoint" value="${file-trigger.endpoint}" />
+				<property name="root" value="${file-trigger.api.root}"/>
+				<property name="port" value="${file-trigger.port}" />
+				<property name="secure" value="${file-trigger.secure}" />
+				<property name="external" value="${file-trigger.external}"/>
+				<property name="prefixList" value="${file-trigger.prefix.list}"/>
+				<property name="clientReadTimeoutInSeconds" value="${file-trigger.timeout.read.seconds:#{null}}"/>
+				<property name="connectTimeOutInSeconds" value="${file-trigger.timeout.connect.seconds:#{null}}"/>
+			</bean>
+	    </entry>
+		<!-- campaign entry -->
+		<entry key="CAMPAIGN">
+			<bean class="com.openshare.service.base.registry.ServiceEntry">
+				<property name="endPoint" value="${campaign.endpoint}" />
+				<property name="root" value="${campaign.api.root}"/>
+				<property name="port" value="${campaign.port}" />
+				<property name="secure" value="${campaign.secure}" />
+				<property name="external" value="${campaign.external}"/>
+				<property name="clientReadTimeoutInSeconds" value="${campaign.timeout.read.seconds:#{null}}"/>
+				<property name="connectTimeOutInSeconds" value="${campaign.timeout.connect.seconds:#{null}}"/>
+			</bean>
+	    </entry>
+		<!-- asset entry -->
+		<entry key="ASSET">
+			<bean class="com.openshare.service.base.registry.ServiceEntry">
+				<property name="endPoint" value="${asset.endpoint}" />
+				<property name="root" value="${asset.api.root}"/>
+				<property name="port" value="${asset.port}" />
+				<property name="secure" value="${asset.secure}" />
+				<property name="external" value="${asset.external}"/>
+				<property name="clientReadTimeoutInSeconds" value="${asset.timeout.read.seconds:#{null}}"/>
+				<property name="connectTimeOutInSeconds" value="${asset.timeout.connect.seconds:#{null}}"/>
+			</bean>
+	    </entry>
+		<!-- notification entry -->
+		<entry key="NOTIFICATION">
+			<bean class="com.openshare.service.base.registry.ServiceEntry">
+				<property name="endPoint" value="${notification.endpoint}" />
+				<property name="root" value="${notification.api.root}"/>
+				<property name="port" value="${notification.port}" />
+				<property name="secure" value="${notification.secure}" />
+				<property name="external" value="${notification.external}"/>
+				<property name="clientReadTimeoutInSeconds" value="${notification.timeout.read.seconds:#{null}}"/>
+				<property name="connectTimeOutInSeconds" value="${notification.timeout.connect.seconds:#{null}}"/>
+			</bean>
+	    </entry>
+	</util:map>
+</beans>

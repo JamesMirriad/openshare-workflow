@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.openshare</groupId>
+		<artifactId>web</artifactId>
+		<version>0.6.0-SNAPSHOT</version>
+	</parent>
+	
+	<name>Openshare Workflow UI</name>
+	<artifactId>workflow-ui</artifactId>
+	<packaging>war</packaging>
+	
+	<dependencies>
+		<!-- mirriad modules-->
+		<dependency>
+			<groupId>com.openshare</groupId>
+			<artifactId>workflow</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<!-- Activiti -->
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-engine</artifactId>
+			<version>5.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-spring</artifactId>
+			<version>5.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-explorer</artifactId>
+			<version>5.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-modeler</artifactId>
+			<version>5.13</version>
+			<exclusions>
+			 <exclusion>
+			     <groupId>xalan</groupId>
+			     <artifactId>xalan</artifactId>
+			 </exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-diagram-rest</artifactId>
+			<version>5.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-simple-workflow</artifactId>
+			<version>5.13</version>
+		</dependency>
+
+		<!-- Database 
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		-->
+		<!-- Running example processes -->
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>${org.codehaus.groovy.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${com.google.gwt.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+      	<dependency>
+        	<groupId>org.springframework</groupId>
+        	<artifactId>spring-orm</artifactId>
+        	<version>${org.springframework.version}</version>
+            <exclusions>
+                 <exclusion>
+                      <groupId>commons-logging</groupId>
+                      <artifactId>commons-logging</artifactId>
+                 </exclusion>
+                 <exclusion>
+                      <groupId>org.hibernate</groupId>
+                      <artifactId>hibernate-entitymanager</artifactId>
+                 </exclusion>
+                 <exclusion>
+                      <groupId>org.hibernate</groupId>
+                      <artifactId>hibernate-cglib-repack</artifactId>
+                 </exclusion>
+                 <exclusion>
+                      <groupId>org.hibernate</groupId>
+                      <artifactId>hibernate-core</artifactId>
+                 </exclusion>
+                 <exclusion>
+                      <groupId>org.hibernate</groupId>
+                      <artifactId>hibernate-annotations</artifactId>
+                 </exclusion>
+            </exclusions>
+      	</dependency>
+      	<dependency>
+        	<groupId>org.springframework</groupId>
+        	<artifactId>spring-tx</artifactId>
+        	<version>${org.springframework.version}</version>
+      	</dependency>
+      	<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.2.6.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.2.6.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.0.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
+		</dependency>
+		<!-- aspect-->
+		<dependency>
+			<groupId>aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+        
+		<!-- activiti dependencies -->
+		<dependency>
+		  	<groupId>org.activiti</groupId>
+		  	<artifactId>activiti-engine</artifactId>
+		  	<version>5.13</version>
+		</dependency>
+		<dependency>
+		  	<groupId>org.activiti</groupId>
+		  	<artifactId>activiti-spring</artifactId>
+		  	<version>5.13</version>
+		</dependency>
+		
+		<!-- logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.6.1</version>
+			<scope>runtime</scope>
+		</dependency>
+            
+		<!--common server (tomcat) dependencies-->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<version>${org.apache.tomcat.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>${org.apache.tomcat.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Apache Commons Upload -->  
+	  	<dependency>  
+	   		<groupId>commons-fileupload</groupId>  
+	   		<artifactId>commons-fileupload</artifactId>  
+	   		<version>1.2.2</version>  
+	  	</dependency>  
+	  
+	  	<!-- Apache Commons Upload -->  
+	  	<dependency>  
+	   		<groupId>commons-io</groupId>  
+	   		<artifactId>commons-io</artifactId>  
+	   		<version>1.3.2</version>  
+	  	</dependency>  
+	  
+	  	<!-- JSTL -->  
+	  	<dependency>  
+	   		<groupId>javax.servlet</groupId>  
+	   		<artifactId>jstl</artifactId>  
+	   		<version>1.1.2</version>  
+	  	</dependency>  
+	  
+	  	<dependency>  
+	   		<groupId>taglibs</groupId>  
+	   		<artifactId>standard</artifactId>  
+	   		<version>1.1.2</version>  
+	  	</dependency>
+		
+		<!-- Vaadin addons -->
+		<!-- Must be defined both in activiti-explorer and activiti-webapp-explorer, as otherwise the gwt compiler won't find it -->
+ 		<dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>dcharts-widget</artifactId>
+            <version>0.10.0</version>
+        </dependency>
+
+		<!-- test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junitperf</groupId>
+			<artifactId>junitperf</artifactId>
+			<version>1.8</version>
+			<scope>test</scope>
+		</dependency>
+
+                <dependency>
+                        <groupId>org.graylog2</groupId>
+                        <artifactId>gelfj</artifactId>
+                </dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>apache-log4j-extras</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.zeroturnaround</groupId>
+				<artifactId>jrebel-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-rebel-xml</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2.1</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/ui-jar.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+
+			<!-- A simple Jetty test server at http://localhost:8080/activiti-webapp-explorer2 
+				can be launched with the Maven goal jetty:run and stopped with jetty:stop -->
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.24</version>
+				<configuration>
+					<stopPort>9966</stopPort>
+					<stopKey>activiti-webapp-explorer2</stopKey>
+					<!-- Redeploy every x seconds if changes are detected, 0 for no automatic 
+						redeployment -->
+					<scanIntervalSeconds>0</scanIntervalSeconds>
+					<!-- make sure Jetty also finds the widgetset -->
+					<webAppConfig>
+						<contextPath>/activiti-explorer2</contextPath>
+						<baseResource implementation="org.mortbay.resource.ResourceCollection">
+							<!-- Workaround for Maven/Jetty issue http://jira.codehaus.org/browse/JETTY-680 -->
+							<!-- <resources>src/main/webapp,${project.build.directory}/${project.build.finalName}</resources> -->
+							<resourcesAsCSV>src/main/webapp</resourcesAsCSV>
+						</baseResource>
+					</webAppConfig>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.zeroturnaround
+										</groupId>
+										<artifactId>
+											jrebel-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.0.7,)
+										</versionRange>
+										<goals>
+											<goal>generate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+                <profile>
+                        <id>ci</id>
+                        <build>
+                                <finalName>${project.artifactId}-${project.version}-build_${env.BUILD_NUMBER}</finalName>
+                        </build>
+                </profile>
+
+		<profile>
+			<id>compile-widgetset</id>
+			<build>
+				<plugins>
+					<!-- Compile custom GWT components or widget dependencies with the GWT compiler -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>gwt-maven-plugin</artifactId>
+						<version>2.3.0</version>
+						<configuration>
+							<webappDirectory>src/main/webapp/VAADIN/widgetsets</webappDirectory>
+							<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+							<runTarget>clean</runTarget>
+							<soyc>false</soyc>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+						      <goal>resources</goal>
+									<goal>compile</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>com.vaadin</groupId>
+						<artifactId>vaadin-maven-plugin</artifactId>
+						<version>1.0.2</version>
+						<executions>
+							<execution>
+							    <phase>prepare-package</phase>
+								<goals>
+									<goal>update-widgetset</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<repositories>
+		<repository>
+			<id>Alfresco Maven Repository</id>
+			<url>https://maven.alfresco.com/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>vaadin-addons</id>
+			<url>http://maven.vaadin.com/vaadin-addons</url>
+		</repository>
+<!--
+		<repository>
+			<id>buzzmedia</id>
+			<url>http://maven.thebuzzmedia.com</url>
+		</repository>
+		<repository>
+			<id>activiti</id>
+			<name>Activiti</name>
+			<url>https://maven.alfresco.com/nexus/content/repositories/activiti/</url>
+		</repository>
+		<repository>
+			<id>activiti-third-party</id>
+			<name>Activiti third party</name>
+			<url>https://maven.alfresco.com/nexus/content/repositories/activiti-thirdparty/</url>
+		</repository>
+		<repository>
+			<id>jboss</id>
+			<name>JBoss Repository</name>
+			<url>http://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>maven-restlet</id>  
+			<name>Public online Restlet repository</name>  
+			<url>http://maven.restlet.org</url>  
+		</repository>
+-->
+	</repositories>
+
+</project>
