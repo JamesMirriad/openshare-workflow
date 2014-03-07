@@ -104,18 +104,4 @@ public class WorkflowWebService{
 			throw new WebApplicationException(e,Response.Status.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-	
-
-	@Override
-	public OpenshareResponse resume(OpenshareException callBack) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public OpenshareResponse error(OpenshareRequest callBack) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
