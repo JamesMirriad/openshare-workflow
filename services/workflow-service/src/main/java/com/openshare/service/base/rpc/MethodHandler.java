@@ -11,7 +11,7 @@ public abstract class MethodHandler {
 	protected Object payload;
 	protected String transactionId;
 	
-	public abstract Response handleExecution();
+	public abstract OpenShareResponse handleExecution();
 
 	public Object getPayload() {
 		return payload;
@@ -29,8 +29,8 @@ public abstract class MethodHandler {
 		this.transactionId = transactionId;
 	}
 
-	protected Response generateErrorResponse(String error){
-		Response response = new Response();
+	protected OpenShareResponse generateErrorResponse(String error){
+		OpenShareResponse response = new OpenShareResponse();
 		response.setTxid(transactionId);
 		response.setStatus(StatusEnum.ERROR);
 		response.setPayload(error);

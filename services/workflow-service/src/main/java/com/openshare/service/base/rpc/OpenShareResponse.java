@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Response implements Serializable{
+public class OpenShareResponse implements Serializable{
 	
 	private static final long serialVersionUID = -5128741549243211534L;
 

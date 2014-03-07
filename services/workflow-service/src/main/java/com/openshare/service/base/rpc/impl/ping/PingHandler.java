@@ -1,7 +1,7 @@
-package com.openshare.service.base.rpc.impl;
+package com.openshare.service.base.rpc.impl.ping;
 
 import com.openshare.service.base.rpc.MethodHandler;
-import com.openshare.service.base.rpc.Response;
+import com.openshare.service.base.rpc.OpenShareResponse;
 /**
  * A simple pin handler common to everything
  * @author james.mcilroy
@@ -10,8 +10,8 @@ import com.openshare.service.base.rpc.Response;
 public class PingHandler extends MethodHandler {
 
 	@Override
-	public Response handleExecution() {
-		Response response = new Response();
+	public OpenShareResponse handleExecution() {
+		OpenShareResponse response = new OpenShareResponse();
 		response.setType("response");
 		response.setPayload("ping received payload:" + payload);
 		return response;

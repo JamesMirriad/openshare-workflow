@@ -1,5 +1,7 @@
 package com.openshare.service.workflow;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,10 @@ import org.activiti.engine.task.IdentityLinkType;
 import org.apache.log4j.Logger;
 
 import com.openshare.service.base.exception.OpenshareException;
+import com.openshare.service.base.request.OpenshareRequest;
+import com.openshare.service.base.rpc.MethodHandler;
+import com.openshare.service.base.rpc.OpenShareResponse;
+import com.openshare.service.base.rpc.ServiceMethodMapper;
 import com.openshare.workflow.conf.ActivitiHelper;
 import com.openshare.workflow.ext.constants.WorkflowConstants;
 /**
@@ -31,6 +37,17 @@ public class WorkflowService {
 		//set up the process engine.
 		ActivitiHelper activityHelper = ActivitiHelper.getInstance();
 		engine = activityHelper.getProcessEngine();
+	}
+	
+	/**
+	 * run a method
+	 * @param request
+	 * @return
+	 * @throws OpenshareException
+	 */
+	public OpenShareResponse runCommand(OpenshareRequest request) throws OpenshareException{
+		MethodHandler handler = ServiceMethodMapper.getMethodHandler(request.getTxid(), request.getMethod(), request.getPayload());
+		return handler.handleExecution();
 	}
 	
 	/**
@@ -84,17 +101,6 @@ public class WorkflowService {
 	 * @return
 	 */
 	public boolean executionExists(String executionId){
-		return executionExists(executionId,false);
-	}
-	
-	/**
-	 * checks for existing executions, but adds in a retry delay, as sometimes DB doesn't
-	 * seem to persist fast enough when doing rest calls in and out of orchestration...
-	 * @param executionId
-	 * @param waitRetry
-	 * @return
-	 */
-	public boolean executionExists(String executionId,boolean waitRetry){
 		RuntimeService runtimeService = engine.getRuntimeService();
 		//if we don't want to add in retries, just perform the query.
 		long result = runtimeService.createExecutionQuery().executionId(executionId).count();
@@ -202,6 +208,29 @@ public class WorkflowService {
 			availableWorkFlows.put(pd.getId(), pd.getName());
 		}
 		return availableWorkFlows;
+	}
+	
+	
+	/**
+	 * list all available workflows 
+	 * @return
+	 */
+	public String getProcessodel(String processName) throws Exception{
+		//get repository service
+		RepositoryService repositoryService = engine.getRepositoryService();
+		
+		//query it for ALL LATEST process definitions
+		ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionKey(processName).latestVersion().singleResult();
+		InputStream is = repositoryService.getProcessModel(pd.getId());
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    byte[] buffer = new byte[1024];
+	    int length = 0;
+	    while ((length = is.read(buffer)) != -1) {
+	        baos.write(buffer, 0, length);
+	    }
+	    byte [] byteArray =  baos.toByteArray();
+	    
+		return new String(byteArray);
 	}
 	
 	/**

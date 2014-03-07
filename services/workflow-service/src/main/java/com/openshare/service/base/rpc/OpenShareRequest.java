@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author james.mcilroy
  *
  */
-public class Request implements Serializable{
+public class OpenShareRequest implements Serializable{
 	
 	private static final long serialVersionUID = 5446389369891928912L;
 	private String type = "request";
