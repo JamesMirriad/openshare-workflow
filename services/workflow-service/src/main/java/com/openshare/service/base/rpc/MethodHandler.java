@@ -1,18 +1,51 @@
 package com.openshare.service.base.rpc;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
+import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.openshare.service.base.exception.OpenshareException;
+
 
 /**
  * a method handler class.
  * @author james.mcilroy
  *
  */
-public abstract class MethodHandler {
+public abstract class MethodHandler<T> {
 
-	protected Object payload;
-	protected String transactionId;
+	private static final Logger logger = Logger.getLogger(MethodHandler.class);
 	
-	public abstract OpenShareResponse handleExecution();
-
+	private Object payload;
+	protected String transactionId;
+	protected Class<T> type;
+	
+	public MethodHandler(){
+		Type t = getClass().getGenericSuperclass();
+		ParameterizedType pt = (ParameterizedType) t;
+		type = (Class<T>) pt.getActualTypeArguments()[0];
+	}
+	
+	public final OpenShareResponse handleExecution() throws OpenshareException{
+		T payloadConverted = getEntryFromPayload();
+		return executeWithConvertedPayload(payloadConverted);
+	}
+	
+	protected abstract OpenShareResponse executeWithConvertedPayload(T convertedPayload);
+	
+	protected T getEntryFromPayload() throws OpenshareException{
+		try{
+			ObjectMapper mapper = new ObjectMapper();
+			T entry = mapper.convertValue(payload, type);
+			return entry;
+		}
+		catch(Exception e){
+			throw new OpenshareException("failed to convert payload: " + payload);
+		}
+	}
+	
 	public Object getPayload() {
 		return payload;
 	}

@@ -46,6 +46,7 @@ public class WorkflowService {
 	 * @throws OpenshareException
 	 */
 	public OpenShareResponse runCommand(OpenshareRequest request) throws OpenshareException{
+		logger.info("executing request " + request.getMethod() + " txid " + request.getTxid());
 		MethodHandler handler = ServiceMethodMapper.getMethodHandler(request.getTxid(), request.getMethod(), request.getPayload());
 		return handler.handleExecution();
 	}

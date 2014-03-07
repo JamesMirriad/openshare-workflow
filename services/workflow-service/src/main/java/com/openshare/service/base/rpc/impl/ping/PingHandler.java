@@ -7,13 +7,13 @@ import com.openshare.service.base.rpc.OpenShareResponse;
  * @author james.mcilroy
  *
  */
-public class PingHandler extends MethodHandler {
+public class PingHandler extends MethodHandler<String> {
 
 	@Override
-	public OpenShareResponse handleExecution() {
+	protected OpenShareResponse executeWithConvertedPayload(String convertedPayload) {
 		OpenShareResponse response = new OpenShareResponse();
 		response.setType("response");
-		response.setPayload("ping received payload:" + payload);
+		response.setPayload("ping received payload:" + convertedPayload);
 		return response;
 	}
 
