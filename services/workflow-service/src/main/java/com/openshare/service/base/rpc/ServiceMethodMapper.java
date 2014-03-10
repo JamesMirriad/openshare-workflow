@@ -1,10 +1,9 @@
 package com.openshare.service.base.rpc;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.service.base.rpc.impl.ping.PingHandler;
 import com.openshare.service.base.rpc.impl.process.definition.WorkFlowDefinitionPayload;
+import com.openshare.service.base.rpc.impl.process.definition.WorkflowDefinitionRemovalHandler;
 import com.openshare.service.base.rpc.impl.process.definition.WorkflowDefinitionUploadHandler;
 /**
  * default service methods, if no service method is defined to override this in the factory, then these are the ones used.
@@ -13,8 +12,9 @@ import com.openshare.service.base.rpc.impl.process.definition.WorkflowDefinition
  */
 public enum ServiceMethodMapper {
 	
-	PING			("ping",	String.class,					PingHandler.class),
-	WORKFLOW_ADD	("add",		WorkFlowDefinitionPayload.class,WorkflowDefinitionUploadHandler.class);
+	PING			("ping",	String.class,						PingHandler.class),
+	WORKFLOW_ADD	("add",		WorkFlowDefinitionPayload.class,	WorkflowDefinitionUploadHandler.class),
+	WORKFLOW_DELETE	("remove",	String.class,						WorkflowDefinitionRemovalHandler.class);	
 	
 	private final String methodName;
 	private final Class<?> payloadClass;
@@ -27,18 +27,15 @@ public enum ServiceMethodMapper {
 	}
 	
 	public String getMethodName() {
-		// TODO Auto-generated method stub
 		return methodName;
 	}
 
 	public Class<?> getPayloadClass() {
-		// TODO Auto-generated method stub
 		return payloadClass;
 	}
 
 	
 	public Class<? extends MethodHandler<?>> getMethodHandlerClass() {
-		// TODO Auto-generated method stub
 		return methodHandlerClass;
 	}
 	
