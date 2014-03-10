@@ -1,7 +1,6 @@
 package com.openshare.service.web.workflow;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,7 +14,6 @@ import org.apache.log4j.Logger;
 
 import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.service.base.request.OpenshareRequest;
-import com.openshare.service.base.response.OpenshareResponse;
 import com.openshare.service.base.rpc.OpenShareResponse;
 import com.openshare.service.workflow.WorkflowService;
 import com.wordnik.swagger.annotations.Api;
@@ -59,6 +57,7 @@ public class WorkflowWebService{
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	@ApiOperation(value = "Get Workflow By Name", response = String.class)
+	@Deprecated
 	public OpenShareResponse getWorkflowByName(@PathParam("name") String name) {
 		OpenShareResponse response = new OpenShareResponse();
 		String model;
@@ -66,40 +65,6 @@ public class WorkflowWebService{
 			model = workflowService.getProcessodel(name);
 			response.setPayload(model);
 			return response;
-		} catch (Exception e) {
-			throw new WebApplicationException(e,Response.Status.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	/**
-	 * cancels a workflow
-	 * @param id
-	 * @return
-	 */
-	@DELETE
-	@Path("/cancel/{id}")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public void cancel(@PathParam("id") String id){
-		try {
-			workflowService.cancel(id);
-		} catch (Exception e) {
-			throw new WebApplicationException(e,Response.Status.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	/**
-	 * deletes a workflow
-	 * @param id
-	 * @return
-	 */
-	@DELETE
-	@Path("/delete/{id}")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public void delete(@PathParam("id") String id){
-		try {
-			workflowService.delete(id);
 		} catch (Exception e) {
 			throw new WebApplicationException(e,Response.Status.INTERNAL_SERVER_ERROR);
 		}

@@ -1,4 +1,4 @@
-package com.openshare.service.base.rpc.impl.process.definition;
+package com.openshare.service.base.rpc.impl.handler.process.definition;
 
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.repository.Deployment;
@@ -30,6 +30,7 @@ public class WorkflowDefinitionRemovalHandler extends MethodHandler<String> {
 
 		OpenShareResponse response = new OpenShareResponse();
 		response.setTxid(this.getTransactionId());
+		response.setPayload(true);
 		return response;
 	}
 

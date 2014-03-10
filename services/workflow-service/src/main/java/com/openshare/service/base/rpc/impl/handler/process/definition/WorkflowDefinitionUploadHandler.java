@@ -1,4 +1,4 @@
-package com.openshare.service.base.rpc.impl.process.definition;
+package com.openshare.service.base.rpc.impl.handler.process.definition;
 
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.repository.Deployment;
@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.openshare.service.base.rpc.MethodHandler;
 import com.openshare.service.base.rpc.OpenShareResponse;
+import com.openshare.service.base.rpc.impl.palyoad.process.definition.WorkFlowDefinitionPayload;
 import com.openshare.workflow.conf.ActivitiHelper;
 /**
  * A simple pin handler common to everything
