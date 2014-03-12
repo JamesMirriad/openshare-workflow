@@ -1,4 +1,4 @@
-package com.openshare.service.base.rpc.impl.ping;
+package com.openshare.service.base.rpc.impl.handler.ping;
 
 import com.openshare.service.base.rpc.MethodHandler;
 import com.openshare.service.base.rpc.OpenShareResponse;

@@ -47,7 +47,7 @@ public class WorkflowService {
 	 */
 	public OpenShareResponse runCommand(OpenshareRequest request) throws OpenshareException{
 		logger.info("executing request " + request.getMethod() + " txid " + request.getTxid());
-		MethodHandler handler = ServiceMethodMapper.getMethodHandler(request.getTxid(), request.getMethod(), request.getPayload());
+		MethodHandler<?> handler = ServiceMethodMapper.getMethodHandler(request.getTxid(), request.getMethod(), request.getPayload());
 		return handler.handleExecution();
 	}
 	
@@ -57,6 +57,7 @@ public class WorkflowService {
 	 * @param map 
      * @return
      */
+	@Deprecated
 	public String startOrchestrationFlow(String orchestrationName, Map<String, Object> map, String parentProcessId){
 		RuntimeService runtimeService = engine.getRuntimeService();
 		//start a workflow with the given name;
@@ -90,6 +91,7 @@ public class WorkflowService {
 	 * @param processId
 	 * @return
 	 */
+	@Deprecated
 	public boolean processExistsAndIsActive(String processId){
 		RuntimeService runtimeService = engine.getRuntimeService();
 		long result = runtimeService.createProcessInstanceQuery().active().processInstanceId(processId).count();
@@ -101,6 +103,7 @@ public class WorkflowService {
 	 * @param executionId
 	 * @return
 	 */
+	@Deprecated
 	public boolean executionExists(String executionId){
 		RuntimeService runtimeService = engine.getRuntimeService();
 		//if we don't want to add in retries, just perform the query.
@@ -114,6 +117,7 @@ public class WorkflowService {
 	 * signal an execution that it can continue (ie external process has finished)
 	 * @param executionId
 	 */
+	@Deprecated
 	public void signal(String callBackId,Map<String,Object> globalProcessVariables,Map<String,Object> localProcessVariables){
 		RuntimeService runtimeService = engine.getRuntimeService();
 		logger.error("signalling resume for process with id: " + callBackId);
@@ -129,6 +133,7 @@ public class WorkflowService {
 	 * @param callBackReferenceId
 	 * @throws Exception
 	 */
+	@Deprecated
 	public void signalError(String callBackReferenceId) throws Exception {
 		//lookup process from execution and suspend.
 		logger.error("signallng error for process with id " + callBackReferenceId + " suspending process");
@@ -155,6 +160,7 @@ public class WorkflowService {
 	 * @param id
 	 * @throws OpenshareException
 	 */
+	@Deprecated
 	public void cancel(String id) throws OpenshareException {
 		logger.error("cancelling process with id " + id + " suspending process");
 		RuntimeService runtimeService = engine.getRuntimeService();
@@ -176,6 +182,7 @@ public class WorkflowService {
 	 * @param id
 	 * @throws OpenshareException
 	 */
+	@Deprecated
 	public void delete(String id) throws OpenshareException {
 		logger.error("deleting process with id " + id + " suspending process");
 		RuntimeService runtimeService = engine.getRuntimeService();
@@ -199,6 +206,7 @@ public class WorkflowService {
 	 * list all available workflows 
 	 * @return
 	 */
+	@Deprecated
 	public Map<String,String> listAvailableWorkflows(){
 		//get repository service
 		RepositoryService repositoryService = engine.getRepositoryService();
@@ -216,6 +224,7 @@ public class WorkflowService {
 	 * list all available workflows 
 	 * @return
 	 */
+	@Deprecated
 	public String getProcessodel(String processName) throws Exception{
 		//get repository service
 		RepositoryService repositoryService = engine.getRepositoryService();
@@ -238,6 +247,7 @@ public class WorkflowService {
 	 * @TODO this should throroughly test wether all services are available, what is running etc.
 	 * @return
 	 */
+	@Deprecated
 	public boolean testService(){
 		if(engine!=null 
 				&& engine.getFormService()!=null

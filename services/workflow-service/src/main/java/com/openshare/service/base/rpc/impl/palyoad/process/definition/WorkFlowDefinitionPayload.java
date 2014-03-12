@@ -1,4 +1,4 @@
-package com.openshare.service.base.rpc.impl.process.definition;
+package com.openshare.service.base.rpc.impl.palyoad.process.definition;
 /**
  * payload containing a workflow definition
  * @author james.mcilroy
