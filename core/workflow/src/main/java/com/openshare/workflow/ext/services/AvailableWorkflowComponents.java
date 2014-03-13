@@ -6,7 +6,13 @@ import java.util.Map;
 import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.workflow.ext.services.component.IWorkflowComponent;
 import com.openshare.workflow.ext.services.component.impl.demo.DemoConsoleDumper;
-
+/**
+ * Enuerative class that contains all the workflow components that are accesible via the 
+ * config call. All implement workflow components should be listed here so they can be used to create 
+ * workflows by external systems.
+ * @author james.mcilroy
+ *
+ */
 public enum AvailableWorkflowComponents {
 
 	DEMO_CONSOLE_DUMPER(DemoConsoleDumper.class);

@@ -13,7 +13,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<integration.test.skip>true</integration.test.skip>
-		<compiler.version>1.7</compiler.version>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
 		<!-- workaround because of http://jira.codehaus.org/browse/MRESOURCES-99 -->
 		<maven_build_timestamp>${maven.build.timestamp}</maven_build_timestamp>
