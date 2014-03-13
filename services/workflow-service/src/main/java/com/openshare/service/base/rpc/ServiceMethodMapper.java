@@ -1,6 +1,7 @@
 package com.openshare.service.base.rpc;
 
 import com.openshare.service.base.exception.OpenshareException;
+import com.openshare.service.base.rpc.impl.handler.config.WorkflowConfigRetriever;
 import com.openshare.service.base.rpc.impl.handler.ping.PingHandler;
 import com.openshare.service.base.rpc.impl.handler.process.definition.WorkflowDefinitionRemovalHandler;
 import com.openshare.service.base.rpc.impl.handler.process.definition.WorkflowDefinitionUploadHandler;
@@ -21,7 +22,8 @@ public enum ServiceMethodMapper {
 	WORKFLOW_DELETE	("remove",	String.class,						WorkflowDefinitionRemovalHandler.class),
 	WORKFLOW_RUN	("run",		String.class,						WorkflowInstanceRunnerHandler.class),
 	WORKFLOW_SUSPEND("stop",	String.class,						WorkflowInstanceSuspenderHandler.class),
-	WORKFLOW_RESUME ("resume",	WorkflowInstanceResumePayload.class,WorkflowInstanceResumeHandler.class);	
+	WORKFLOW_RESUME ("resume",	WorkflowInstanceResumePayload.class,WorkflowInstanceResumeHandler.class),	
+	COMPONENT_CONFIG("config",	String.class,						WorkflowConfigRetriever.class);
 	
 	private final String methodName;
 	private final Class<?> payloadClass;

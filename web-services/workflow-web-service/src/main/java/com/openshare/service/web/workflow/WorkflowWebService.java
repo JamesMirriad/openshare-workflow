@@ -13,8 +13,9 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 
 import com.openshare.service.base.exception.OpenshareException;
-import com.openshare.service.base.request.OpenshareRequest;
+import com.openshare.service.base.rpc.OpenShareRequest;
 import com.openshare.service.base.rpc.OpenShareResponse;
+import com.openshare.service.base.rpc.StatusEnum;
 import com.openshare.service.workflow.WorkflowService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -41,11 +42,14 @@ public class WorkflowWebService{
 	@POST
 	@Path("/run/")
 	@Produces({MediaType.APPLICATION_JSON})
-	public OpenShareResponse runCommand(OpenshareRequest request){
+	public OpenShareResponse runCommand(OpenShareRequest request){
 		try {
 			return workflowService.runCommand(request);
 		} catch (OpenshareException e) {
-			throw new WebApplicationException(e,Response.Status.INTERNAL_SERVER_ERROR);
+			OpenShareResponse response = new OpenShareResponse();
+			response.setStatus(StatusEnum.ERROR);
+			response.setPayload(e);
+			return response;
 		}
 	}
 	/*

@@ -16,8 +16,8 @@ import org.activiti.engine.task.IdentityLinkType;
 import org.apache.log4j.Logger;
 
 import com.openshare.service.base.exception.OpenshareException;
-import com.openshare.service.base.request.OpenshareRequest;
 import com.openshare.service.base.rpc.MethodHandler;
+import com.openshare.service.base.rpc.OpenShareRequest;
 import com.openshare.service.base.rpc.OpenShareResponse;
 import com.openshare.service.base.rpc.ServiceMethodMapper;
 import com.openshare.workflow.conf.ActivitiHelper;
@@ -45,7 +45,7 @@ public class WorkflowService {
 	 * @return
 	 * @throws OpenshareException
 	 */
-	public OpenShareResponse runCommand(OpenshareRequest request) throws OpenshareException{
+	public OpenShareResponse runCommand(OpenShareRequest request) throws OpenshareException{
 		logger.info("executing request " + request.getMethod() + " txid " + request.getTxid());
 		MethodHandler<?> handler = ServiceMethodMapper.getMethodHandler(request.getTxid(), request.getMethod(), request.getPayload());
 		return handler.handleExecution();

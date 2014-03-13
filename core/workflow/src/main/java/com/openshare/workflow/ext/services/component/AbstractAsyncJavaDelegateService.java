@@ -1,4 +1,4 @@
-package com.openshare.workflow.ext.services;
+package com.openshare.workflow.ext.services.component;
 
 import java.io.Serializable;
 import java.util.Map.Entry;
@@ -45,8 +45,8 @@ import com.openshare.workflow.ext.exception.WorkflowException;
  * @author james.mcilroy
  *
  */
-public abstract class AbstractAsyncJavaDelegateService extends TaskActivityBehavior
-{
+public abstract class AbstractAsyncJavaDelegateService extends TaskActivityBehavior implements IWorkflowComponent{
+	
 	private static final long serialVersionUID = -3579467266051396216L;
 	
 	private static final Logger logger = Logger.getLogger(AbstractAsyncJavaDelegateService.class);
@@ -169,11 +169,6 @@ public abstract class AbstractAsyncJavaDelegateService extends TaskActivityBehav
 	 * @throws Exception
 	 */
 	protected abstract void handleExecution(ActivityExecution execution) throws OpenshareException;
-	
-	/**
-	 * Convenience for naming the executor type
-	 * @return
-	 */
-	protected abstract String getExecutorDisplayName();
+
 }
 

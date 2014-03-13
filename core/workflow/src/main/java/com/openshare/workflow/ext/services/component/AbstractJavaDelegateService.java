@@ -1,4 +1,4 @@
-package com.openshare.workflow.ext.services;
+package com.openshare.workflow.ext.services.component;
 
 import java.util.Map.Entry;
 
@@ -23,7 +23,7 @@ import com.openshare.workflow.ext.constants.WorkflowErrorConstants;
  * @author james.mcilroy
  *
  */
-public abstract class AbstractJavaDelegateService implements JavaDelegate {
+public abstract class AbstractJavaDelegateService implements JavaDelegate, IWorkflowComponent {
 
 	private static final Logger logger = Logger.getLogger(AbstractJavaDelegateService.class);
 
@@ -56,11 +56,5 @@ public abstract class AbstractJavaDelegateService implements JavaDelegate {
 	 * @throws Exception
 	 */
 	protected abstract void handleExecution(DelegateExecution arg0) throws OpenshareException;
-	
-	/**
-	 * COnvenience for naming the executor type
-	 * @return
-	 */
-	protected abstract String getExecutorDisplayName();
 	
 }
