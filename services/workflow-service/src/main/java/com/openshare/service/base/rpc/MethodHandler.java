@@ -22,15 +22,28 @@ public abstract class MethodHandler<T> {
 	protected String transactionId;
 	protected Class<T> type;
 	
+	/**
+	 * Default constructor
+	 */
 	public MethodHandler(){
 		Type t = getClass().getGenericSuperclass();
 		ParameterizedType pt = (ParameterizedType) t;
 		type = (Class<T>) pt.getActualTypeArguments()[0];
 	}
 	
+	/**
+	 * Handles the method execution
+	 * @return
+	 * @throws OpenshareException
+	 */
 	public final OpenShareResponse handleExecution() throws OpenshareException{
-		T payloadConverted = getEntryFromPayload();
-		return executeWithConvertedPayload(payloadConverted);
+		try{
+			T payloadConverted = getEntryFromPayload();
+			return executeWithConvertedPayload(payloadConverted);
+		}
+		catch(Throwable t){
+			throw new OpenshareException("Failed to execute method handler, cause:",t);
+		}
 	}
 	
 	protected abstract OpenShareResponse executeWithConvertedPayload(T convertedPayload);
@@ -41,7 +54,7 @@ public abstract class MethodHandler<T> {
 			T entry = mapper.convertValue(payload, type);
 			return entry;
 		}
-		catch(Exception e){
+		catch(Throwable t){
 			throw new OpenshareException("failed to convert payload: " + payload);
 		}
 	}

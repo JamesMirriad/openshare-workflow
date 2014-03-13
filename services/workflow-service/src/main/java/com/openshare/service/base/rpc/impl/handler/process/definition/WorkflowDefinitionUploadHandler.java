@@ -25,6 +25,7 @@ public class WorkflowDefinitionUploadHandler extends MethodHandler<WorkFlowDefin
 		ActivitiHelper activityHelper = ActivitiHelper.getInstance();
 		ProcessEngine engine = activityHelper.getProcessEngine();
 		logger.info("creating new deployment:");
+		logger.info(convertedPayload.getData());
 		//build the deployment
 		DeploymentBuilder builder = engine.getRepositoryService().createDeployment();
 		
