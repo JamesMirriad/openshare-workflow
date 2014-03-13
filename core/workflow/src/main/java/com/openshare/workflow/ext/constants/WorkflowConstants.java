@@ -10,8 +10,11 @@ public class WorkflowConstants {
 	
 	//the default user
 	public static final String DEFAULT_USER = "sysadmin";
+
+	public static final String ERROR_IN_EXTERNAL_EXECUTION 	= "ErrorInExternalExecution";
 	
-	public static final String ERROR_IN_EXTERNAL_EXECUTION = "ErrorInExternalExecution";
+	//Callback variable for async process
+	public static final String CALLBACK_OBJECT			 	= "CallBackObjectVariable";
 
 	//User variable
 	public static final String PROCESS_OWNER = "processOwner";

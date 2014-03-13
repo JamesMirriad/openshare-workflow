@@ -1,12 +1,15 @@
 package com.openshare.workflow.ext.services.component;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Map.Entry;
 
 import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.impl.bpmn.behavior.TaskActivityBehavior;
 import org.activiti.engine.impl.pvm.delegate.ActivityExecution;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.workflow.ext.constants.WorkflowConstants;
@@ -45,11 +48,24 @@ import com.openshare.workflow.ext.exception.WorkflowException;
  * @author james.mcilroy
  *
  */
-public abstract class AbstractAsyncJavaDelegateService extends TaskActivityBehavior implements IWorkflowComponent{
+public abstract class AbstractAsyncJavaDelegateService<T> extends TaskActivityBehavior implements IWorkflowComponent{
 	
 	private static final long serialVersionUID = -3579467266051396216L;
 	
 	private static final Logger logger = Logger.getLogger(AbstractAsyncJavaDelegateService.class);
+	
+	protected Class<T> type;
+	
+	/**
+	 * Constructor does reflection at runtime to figure out T
+	 */
+	@SuppressWarnings("unchecked")
+	public AbstractAsyncJavaDelegateService(){
+		super();
+		Type t = getClass().getGenericSuperclass();
+		ParameterizedType pt = (ParameterizedType) t;
+		type = (Class<T>) pt.getActualTypeArguments()[0];
+	}
 	
 	/**
 	 * store a variable in local parameter context
@@ -80,6 +96,29 @@ public abstract class AbstractAsyncJavaDelegateService extends TaskActivityBehav
 	private String generateKeyForInstance(ActivityExecution execution,String name){
 		String id = execution.getId();
 		return name+"-"+id;
+	}
+	
+	/**
+	 * get payload converted to correct class type
+	 * @param execution
+	 * @return
+	 * @throws OpenshareException
+	 */
+	private final T getEntryFromPayload(ActivityExecution execution) throws OpenshareException{
+		if(execution.hasVariableLocal(WorkflowConstants.CALLBACK_OBJECT)){
+			try{
+				Object payload = execution.getVariableLocal(WorkflowConstants.CALLBACK_OBJECT);
+				ObjectMapper mapper = new ObjectMapper();
+				T entry = mapper.convertValue(payload, type);
+				return entry;
+			}
+			catch(Exception e){
+				throw new OpenshareException("failed to convert payload");
+			}
+		}
+		else{
+			return null;
+		}
 	}
 	
     @Override
@@ -119,7 +158,9 @@ public abstract class AbstractAsyncJavaDelegateService extends TaskActivityBehav
 				doPostExecutionErrorHandling(execution);
 			}
 			logger.info("(execution id: "+ execution.getId() +") - Performing Post Execution for - " + getExecutorDisplayName());
-			doPostExecution(execution);
+			//get callback object in correct templated type for underlying component
+			T callBackObject = getEntryFromPayload(execution);
+			doPostExecution(execution,callBackObject);
 		}
     	catch(OpenshareException me){
     		logger.error("Failed to execute " + this.getExecutorDisplayName() + " " + execution.getId() + " cause: "+ me,me);
@@ -152,7 +193,7 @@ public abstract class AbstractAsyncJavaDelegateService extends TaskActivityBehav
 	 * do all the operations we'd want to do when the call returns.
 	 * @throws WorkflowException 
 	 */
-	public abstract void doPostExecution(ActivityExecution execution) throws WorkflowException;
+	public abstract void doPostExecution(ActivityExecution execution,T callBackObject) throws WorkflowException;
 	
 	/**
 	 * Do any variable setup, pulling things from parameter map and other. 

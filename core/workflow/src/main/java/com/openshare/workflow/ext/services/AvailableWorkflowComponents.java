@@ -7,7 +7,7 @@ import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.workflow.ext.services.component.IWorkflowComponent;
 import com.openshare.workflow.ext.services.component.impl.demo.DemoConsoleDumper;
 /**
- * Enuerative class that contains all the workflow components that are accesible via the 
+ * Enumerative class that contains all the workflow components that are accessible via the 
  * config call. All implement workflow components should be listed here so they can be used to create 
  * workflows by external systems.
  * @author james.mcilroy
@@ -25,6 +25,16 @@ public enum AvailableWorkflowComponents {
 
 	public Class<? extends IWorkflowComponent> getWorkflowComponentClass() {
 		return workflowComponentClass;
+	}
+	
+	public String getComponentName() throws OpenshareException{
+		try{
+			IWorkflowComponent component = workflowComponentClass.newInstance();
+			return component.getExecutorDisplayName();
+		}
+		catch(Throwable t){
+			throw new OpenshareException("cannot instantiate class to get name");
+		}
 	}
 	
 	public static Map<String,String> getAvailableWorkflowComponents() throws OpenshareException{

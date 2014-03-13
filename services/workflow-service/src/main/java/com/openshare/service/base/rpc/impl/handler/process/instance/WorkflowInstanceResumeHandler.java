@@ -10,6 +10,7 @@ import com.openshare.service.base.rpc.MethodHandler;
 import com.openshare.service.base.rpc.OpenShareResponse;
 import com.openshare.service.base.rpc.impl.palyoad.process.instance.WorkflowInstanceResumePayload;
 import com.openshare.workflow.conf.ActivitiHelper;
+import com.openshare.workflow.ext.constants.WorkflowConstants;
 /**
  * executes a run time instance given a deployment id of the associated
  * process definition
@@ -28,10 +29,16 @@ public class WorkflowInstanceResumeHandler  extends MethodHandler<WorkflowInstan
 		ProcessEngine engine = activityHelper.getProcessEngine();
 		RuntimeService runtimeService = engine.getRuntimeService();
 		logger.error("signalling resume for process with id: " + convertedPayload.getProcessId());
+		
 		//set local and global process variables that have been returned
 		//TODO: need to put the call back variables in the map.
 		HashMap<String,Object> localProcessVariables = new HashMap<String,Object>();
 		HashMap<String,Object> globalProcessVariables = new HashMap<String,Object>();
+		//add in the callback object in the local map ready to be used by the process component that is waiting for signal command
+
+		Object payload = convertedPayload.getPayload();
+		localProcessVariables.put(WorkflowConstants.CALLBACK_OBJECT, payload);
+		
 		//set variables into execution context
 		runtimeService.setVariablesLocal(convertedPayload.getProcessId(), localProcessVariables);
 		runtimeService.setVariables(convertedPayload.getProcessId(), globalProcessVariables);
