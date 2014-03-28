@@ -1,5 +1,8 @@
 package com.openshare.workflow.ext.services.component;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import org.activiti.engine.delegate.BpmnError;
@@ -8,6 +11,7 @@ import org.activiti.engine.delegate.JavaDelegate;
 import org.apache.log4j.Logger;
 
 import com.openshare.service.base.exception.OpenshareException;
+import com.openshare.util.parse.VariableParser;
 import com.openshare.workflow.ext.constants.WorkflowErrorConstants;
 
 /**
@@ -49,6 +53,31 @@ public abstract class AbstractJavaDelegateService implements JavaDelegate, IWork
 		
 		logger.info("(execution id: "+ execution.getId() +") - Exiting - " + getExecutorDisplayName());
 	}
+
+	/**
+	 * parse the expression with the variables in the execution map and replace where necessary
+	 * @param execution
+	 * @param expression
+	 * @return
+	 */
+	protected String parseExpression(DelegateExecution execution, String expression){
+		//copy the command
+		String parsedCommand = expression;
+		//we need to find "variables" delimited by ${} for replacements and get them.
+		Set<String> variables = VariableParser.parseExpression(expression);
+		Map<String,Object> variableInstances = new HashMap<String,Object>();
+		//try and find the required variables in the execution variable map
+		for(String var : variables){
+			if(execution.hasVariable(var)){
+				if(execution.getVariable(var)!=null){
+					variableInstances.put(var, execution.getVariable(var));
+				}
+			}
+		}
+		//now, cycle through them, call toString on the object, and do a replace for each one
+		parsedCommand = VariableParser.replaceVariablesInExpression(expression, variableInstances);
+		return parsedCommand;
+	}
 	
 	/**
 	 * hand off to implementing subclass
@@ -57,4 +86,7 @@ public abstract class AbstractJavaDelegateService implements JavaDelegate, IWork
 	 */
 	protected abstract void handleExecution(DelegateExecution arg0) throws OpenshareException;
 	
+	public abstract String getComponentXMLConfig();
+	
+	public abstract String getExecutorDisplayName();
 }

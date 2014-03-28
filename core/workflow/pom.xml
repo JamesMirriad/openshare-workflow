@@ -14,10 +14,15 @@
 	<packaging>jar</packaging>
 	
 	<dependencies>
-		<!-- mirriad utils-->
+		<!-- openshare utils-->
 		<dependency>
 			<groupId>com.openshare</groupId>
 			<artifactId>gen-util</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.openshare</groupId>
+			<artifactId>file-util</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<!-- openshare modules-->

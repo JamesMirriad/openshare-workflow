@@ -1,4 +1,4 @@
-package com.mirriad.util.properties;
+package com.openshare.util.properties;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

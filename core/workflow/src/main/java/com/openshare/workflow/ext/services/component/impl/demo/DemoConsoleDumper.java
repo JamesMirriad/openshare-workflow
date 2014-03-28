@@ -36,17 +36,16 @@ public class DemoConsoleDumper extends AbstractJavaDelegateService {
 
 	@Override
 	public String getComponentXMLConfig() {
-		return 
-	  "<serviceTask id=\"${component-id}\" name=\"Console Demo Dumper\" activiti:class=\""+this.getClass().getName()+"\">"+
-      "<extensionElements>"+
-      "<activiti:field name=\"variableOne\">"+
-      "<activiti:string>${value}</activiti:string>"+
-      "</activiti:field>"+
-      "<activiti:field name=\"variableTwo\">"+
-      "<activiti:string>${value}</activiti:string>"+
-      "</activiti:field>"+
-      "</extensionElements>"+
-      "</serviceTask>";
+		return "<serviceTask id=\"${component-id}\" name=\"Console Demo Dumper\" activiti:class=\""+this.getClass().getName()+"\">"+
+				"<extensionElements>"+
+				"<activiti:field name=\"variableOne\">"+
+				"<activiti:string>${value}</activiti:string>"+
+				"</activiti:field>"+
+				"<activiti:field name=\"variableTwo\">"+
+				"<activiti:string>${value}</activiti:string>"+
+				"</activiti:field>"+
+				"</extensionElements>"+
+				"</serviceTask>";
 	}
 
 }

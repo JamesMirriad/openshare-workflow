@@ -1,4 +1,4 @@
-package com.mirriad.util.base64;
+package com.openshare.util.base64;
 
 import org.apache.commons.codec.binary.Base64;
 

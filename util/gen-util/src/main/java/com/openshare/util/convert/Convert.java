@@ -1,4 +1,4 @@
-package com.mirriad.util.convert;
+package com.openshare.util.convert;
 
 import org.apache.log4j.Logger;
 

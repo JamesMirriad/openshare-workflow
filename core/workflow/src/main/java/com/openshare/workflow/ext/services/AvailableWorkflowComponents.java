@@ -5,6 +5,10 @@ import java.util.Map;
 
 import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.workflow.ext.services.component.IWorkflowComponent;
+import com.openshare.workflow.ext.services.component.exec.CommandLineExecutor;
+import com.openshare.workflow.ext.services.component.file.Copy;
+import com.openshare.workflow.ext.services.component.file.Delete;
+import com.openshare.workflow.ext.services.component.file.Move;
 import com.openshare.workflow.ext.services.component.impl.demo.DemoConsoleDumper;
 /**
  * Enumerative class that contains all the workflow components that are accessible via the 
@@ -15,7 +19,11 @@ import com.openshare.workflow.ext.services.component.impl.demo.DemoConsoleDumper
  */
 public enum AvailableWorkflowComponents {
 
-	DEMO_CONSOLE_DUMPER(DemoConsoleDumper.class);
+	DEMO_CONSOLE_DUMPER	(DemoConsoleDumper.class),
+	COMMAND_LINE_EXEC	(CommandLineExecutor.class),
+	COPY_FILE			(Copy.class),
+	MOVE_FILE			(Move.class),
+	DELETE_FILE			(Delete.class);
 	
 	private final Class<? extends IWorkflowComponent> workflowComponentClass;
 	

@@ -3,15 +3,20 @@ package com.openshare.workflow.ext.services.component;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import org.activiti.engine.delegate.BpmnError;
+import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.impl.bpmn.behavior.TaskActivityBehavior;
 import org.activiti.engine.impl.pvm.delegate.ActivityExecution;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.openshare.service.base.exception.OpenshareException;
+import com.openshare.util.parse.VariableParser;
 import com.openshare.workflow.ext.constants.WorkflowConstants;
 import com.openshare.workflow.ext.constants.WorkflowErrorConstants;
 import com.openshare.workflow.ext.exception.WorkflowException;
@@ -176,6 +181,31 @@ public abstract class AbstractAsyncJavaDelegateService<T> extends TaskActivityBe
 		
 		logger.info("(execution id: "+ execution.getId() +") - Exiting - " + getExecutorDisplayName());
 		leave(execution);
+	}
+
+	/**
+	 * parse the expression with the variables in the execution map and replace where necessary
+	 * @param execution
+	 * @param expression
+	 * @return
+	 */
+	protected String parseExpression(DelegateExecution execution, String expression){
+		//copy the command
+		String parsedCommand = expression;
+		//we need to find "variables" delimited by ${} for replacements and get them.
+		Set<String> variables = VariableParser.parseExpression(expression);
+		Map<String,Object> variableInstances = new HashMap<String,Object>();
+		//try and find the required variables in the execution variable map
+		for(String var : variables){
+			if(execution.hasVariable(var)){
+				if(execution.getVariable(var)!=null){
+					variableInstances.put(var, execution.getVariable(var));
+				}
+			}
+		}
+		//now, cycle through them, call toString on the object, and do a replace for each one
+		parsedCommand = VariableParser.replaceVariablesInExpression(expression, variableInstances);
+		return parsedCommand;
 	}
 	
     /**

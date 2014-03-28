@@ -14,5 +14,6 @@
 
 	<modules>
 		<module>gen-util</module>
+		<module>file-util</module>
 	</modules>
 </project>

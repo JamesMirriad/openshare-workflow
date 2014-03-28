@@ -7,7 +7,15 @@ package com.openshare.workflow.ext.services.component;
  */
 public interface IWorkflowComponent {
 
+	/**
+	 * retrieve the configuration XML for this component
+	 * @return
+	 */
 	public String getComponentXMLConfig();
 	
+	/**
+	 * gets the executor display name for this component
+	 * @return
+	 */
 	public String getExecutorDisplayName();
 }
