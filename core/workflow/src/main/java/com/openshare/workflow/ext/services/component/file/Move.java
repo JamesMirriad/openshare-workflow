@@ -21,6 +21,7 @@ public class Move extends AbstractJavaDelegateService {
 
 	private Expression source;
 	private Expression target;
+	private Expression targetVariableName;
 	
 	@Override
 	protected void handleExecution(DelegateExecution execution)
@@ -28,15 +29,11 @@ public class Move extends AbstractJavaDelegateService {
 		String sourceFileUri = parseExpression(execution, (String) source.getValue(execution));
 		//if there was no source file set as a variable, then assume that we are working on the main source file in 
 		//this workflow
-		if(sourceFileUri==null || sourceFileUri.isEmpty()){
-			sourceFileUri = (String)execution.getVariable(WorkflowConstants.SOURCE_FILE);
-		}
-		//if there was no source file set as a variable, then assume that we are working on the main source file in 
-		//this workflow
-		if(sourceFileUri==null || sourceFileUri.isEmpty()){
+		if(sourceFileUri==null || sourceFileUri.isEmpty() || sourceFileUri.equals(".")){
 			sourceFileUri = (String)execution.getVariable(WorkflowConstants.SOURCE_FILE);
 		}
 		String targetFileUri = parseExpression(execution, (String) target.getValue(execution));
+		String targetFileVariable = parseExpression(execution, (String) targetVariableName.getValue(execution));
 		logger.info("source: " + sourceFileUri);
 		logger.info("target: " + targetFileUri);
 		try {
@@ -44,7 +41,13 @@ public class Move extends AbstractJavaDelegateService {
 			FileSystemObject targetFile = FileFactory.GetInstance().create(targetFileUri);
 			sourceFile.moveTo(targetFile);
 			logger.info("move completed");
-			execution.setVariable(WorkflowConstants.SOURCE_FILE, targetFileUri);
+			//set target variable name
+			if(targetFileVariable!=null && !targetFileVariable.isEmpty()){
+				execution.setVariable(targetFileVariable, targetFileUri);
+			}
+			else{
+				execution.setVariable(WorkflowConstants.SOURCE_FILE, targetFileUri);
+			}
 		} 
 		catch (FileUtilException e) {
 			throw new OpenshareException("Failed to delete file, cause:",e);

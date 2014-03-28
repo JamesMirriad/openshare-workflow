@@ -27,7 +27,7 @@ public class Delete extends AbstractJavaDelegateService {
 		String sourceFileUri = parseExpression(execution, (String) source.getValue(execution));
 		//if there was no source file set as a variable, then assume that we are working on the main source file in 
 		//this workflow
-		if(sourceFileUri==null || sourceFileUri.isEmpty()){
+		if(sourceFileUri==null || sourceFileUri.isEmpty() || sourceFileUri.equals(".")){
 			sourceFileUri = (String)execution.getVariable(WorkflowConstants.SOURCE_FILE);
 		}
 		try {
