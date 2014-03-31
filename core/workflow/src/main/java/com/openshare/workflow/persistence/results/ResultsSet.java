@@ -1,9 +1,10 @@
-package com.openshare.service.base.dto.results;
+package com.openshare.workflow.persistence.results;
 
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.openshare.workflow.domain.PersistableObject;
 import com.wordnik.swagger.annotations.ApiModel;
 /**
  * class to hold results set and full count. Results may be paginated,
@@ -14,7 +15,7 @@ import com.wordnik.swagger.annotations.ApiModel;
  */
 @ApiModel(value="ResultsSet", description="A results set operation")
 @XmlRootElement
-public class ResultsSet <T>{
+public class ResultsSet <T extends PersistableObject>{
 	
 	private Long numberOfResults;
 	

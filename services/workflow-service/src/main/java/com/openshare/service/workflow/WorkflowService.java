@@ -23,7 +23,7 @@ import com.openshare.service.base.rpc.ServiceMethodMapper;
 import com.openshare.workflow.conf.ActivitiHelper;
 import com.openshare.workflow.ext.constants.WorkflowConstants;
 /**
- * Orchestration service
+ * Workflow service
  * @author james.mcilroy
  *
  */

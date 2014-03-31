@@ -8,8 +8,10 @@ import com.openshare.service.base.rpc.impl.handler.process.definition.WorkflowDe
 import com.openshare.service.base.rpc.impl.handler.process.instance.WorkflowInstanceResumeHandler;
 import com.openshare.service.base.rpc.impl.handler.process.instance.WorkflowInstanceRunnerHandler;
 import com.openshare.service.base.rpc.impl.handler.process.instance.WorkflowInstanceSuspenderHandler;
+import com.openshare.service.base.rpc.impl.handler.process.instance.WorkflowInstanceTriggerHandler;
 import com.openshare.service.base.rpc.impl.palyoad.process.definition.WorkFlowDefinitionPayload;
 import com.openshare.service.base.rpc.impl.palyoad.process.instance.WorkflowInstanceResumePayload;
+import com.openshare.service.base.rpc.impl.palyoad.process.instance.WorkflowInstanceTriggerPayload;
 /**
  * default service methods, if no service method is defined to override this in the factory, then these are the ones used.
  * @author james.mcilroy
@@ -17,13 +19,14 @@ import com.openshare.service.base.rpc.impl.palyoad.process.instance.WorkflowInst
  */
 public enum ServiceMethodMapper {
 	
-	PING			("ping",	String.class,						PingHandler.class),
-	WORKFLOW_ADD	("add",		WorkFlowDefinitionPayload.class,	WorkflowDefinitionUploadHandler.class),
-	WORKFLOW_DELETE	("remove",	String.class,						WorkflowDefinitionRemovalHandler.class),
-	WORKFLOW_RUN	("run",		String.class,						WorkflowInstanceRunnerHandler.class),
-	WORKFLOW_SUSPEND("stop",	String.class,						WorkflowInstanceSuspenderHandler.class),
-	WORKFLOW_RESUME ("resume",	WorkflowInstanceResumePayload.class,WorkflowInstanceResumeHandler.class),	
-	COMPONENT_CONFIG("config",	String.class,						WorkflowConfigRetriever.class);
+	PING			("ping",	String.class,							PingHandler.class),
+	WORKFLOW_ADD	("add",		WorkFlowDefinitionPayload.class,		WorkflowDefinitionUploadHandler.class),
+	WORKFLOW_DELETE	("remove",	String.class,							WorkflowDefinitionRemovalHandler.class),
+	WORKFLOW_RUN	("run",		String.class,							WorkflowInstanceRunnerHandler.class),
+	WORKFLOW_SUSPEND("stop",	String.class,							WorkflowInstanceSuspenderHandler.class),
+	WORKFLOW_RESUME ("resume",	WorkflowInstanceResumePayload.class,	WorkflowInstanceResumeHandler.class),
+	WORKFLOW_TRIGGER("trigger",	WorkflowInstanceTriggerPayload.class,	WorkflowInstanceTriggerHandler.class),	
+	COMPONENT_CONFIG("config",	String.class,							WorkflowConfigRetriever.class);
 	
 	private final String methodName;
 	private final Class<?> payloadClass;
