@@ -2,6 +2,8 @@ package com.openshare.service.base.rpc;
 
 import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.service.base.rpc.impl.handler.config.WorkflowConfigRetriever;
+import com.openshare.service.base.rpc.impl.handler.mapping.WorkflowMappingHandler;
+import com.openshare.service.base.rpc.impl.handler.mapping.WorkflowMappingListHandler;
 import com.openshare.service.base.rpc.impl.handler.ping.PingHandler;
 import com.openshare.service.base.rpc.impl.handler.process.definition.WorkflowDefinitionRemovalHandler;
 import com.openshare.service.base.rpc.impl.handler.process.definition.WorkflowDefinitionUploadHandler;
@@ -9,6 +11,7 @@ import com.openshare.service.base.rpc.impl.handler.process.instance.WorkflowInst
 import com.openshare.service.base.rpc.impl.handler.process.instance.WorkflowInstanceRunnerHandler;
 import com.openshare.service.base.rpc.impl.handler.process.instance.WorkflowInstanceSuspenderHandler;
 import com.openshare.service.base.rpc.impl.handler.process.instance.WorkflowInstanceTriggerHandler;
+import com.openshare.service.base.rpc.impl.palyoad.mapping.TriggerWorkflowMappingPayload;
 import com.openshare.service.base.rpc.impl.palyoad.process.definition.WorkFlowDefinitionPayload;
 import com.openshare.service.base.rpc.impl.palyoad.process.instance.WorkflowInstanceResumePayload;
 import com.openshare.service.base.rpc.impl.palyoad.process.instance.WorkflowInstanceTriggerPayload;
@@ -19,14 +22,22 @@ import com.openshare.service.base.rpc.impl.palyoad.process.instance.WorkflowInst
  */
 public enum ServiceMethodMapper {
 	
-	PING			("ping",	String.class,							PingHandler.class),
-	WORKFLOW_ADD	("add",		WorkFlowDefinitionPayload.class,		WorkflowDefinitionUploadHandler.class),
-	WORKFLOW_DELETE	("remove",	String.class,							WorkflowDefinitionRemovalHandler.class),
-	WORKFLOW_RUN	("run",		String.class,							WorkflowInstanceRunnerHandler.class),
-	WORKFLOW_SUSPEND("stop",	String.class,							WorkflowInstanceSuspenderHandler.class),
-	WORKFLOW_RESUME ("resume",	WorkflowInstanceResumePayload.class,	WorkflowInstanceResumeHandler.class),
-	WORKFLOW_TRIGGER("trigger",	WorkflowInstanceTriggerPayload.class,	WorkflowInstanceTriggerHandler.class),	
-	COMPONENT_CONFIG("config",	String.class,							WorkflowConfigRetriever.class);
+	//ping "hello world" handler
+	PING				("ping",	String.class,							PingHandler.class),
+	//workflow definition operations
+	WORKFLOW_ADD		("add",		WorkFlowDefinitionPayload.class,		WorkflowDefinitionUploadHandler.class),
+	WORKFLOW_DELETE		("remove",	String.class,							WorkflowDefinitionRemovalHandler.class),
+	//workflow instance operations
+	WORKFLOW_RUN		("run",		String.class,							WorkflowInstanceRunnerHandler.class),
+	WORKFLOW_SUSPEND	("stop",	String.class,							WorkflowInstanceSuspenderHandler.class),
+	WORKFLOW_RESUME 	("resume",	WorkflowInstanceResumePayload.class,	WorkflowInstanceResumeHandler.class),
+	//trigger operations that use the trigger-workflow map to instantiate workflows
+	WORKFLOW_TRIGGER	("trigger",	WorkflowInstanceTriggerPayload.class,	WorkflowInstanceTriggerHandler.class),
+	//do operations on the workflow-trigger mapper objects
+	WORKFLOW_MAPPER_OP	("map", 	TriggerWorkflowMappingPayload.class,  	WorkflowMappingHandler.class),
+	WORKFLOW_MAPPER_LIST("list", 	String.class,  							WorkflowMappingListHandler.class),
+	//component config
+	COMPONENT_CONFIG	("config",	String.class,							WorkflowConfigRetriever.class);
 	
 	private final String methodName;
 	private final Class<?> payloadClass;

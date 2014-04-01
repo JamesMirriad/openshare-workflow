@@ -118,6 +118,11 @@ public abstract class GenericJpaDaoImpl<T extends PersistableObject> implements 
 				}
 			}
 		}
+
+		if(em==null || !em.isOpen()){
+			em = PersistenceService.getInstance().createEntityManager();
+		}
+		
 		TypedQuery<T> query = em.createQuery(q);
 		//set maximum per page
 		query = setPagination(query, params);
@@ -213,6 +218,9 @@ public abstract class GenericJpaDaoImpl<T extends PersistableObject> implements 
      */
     public T persist(final T t) {
     	try{
+    		if(em==null || !em.isOpen()){
+				em = PersistenceService.getInstance().createEntityManager();
+			}
 			em.getTransaction().begin();
 	        this.em.persist(t);
 			em.getTransaction().commit();
@@ -227,6 +235,9 @@ public abstract class GenericJpaDaoImpl<T extends PersistableObject> implements 
 
     public T load(final Object id) {
     	try{
+    		if(em==null || !em.isOpen()){
+				em = PersistenceService.getInstance().createEntityManager();
+			}
     		return this.em.find(type, id);
     	}
     	finally{
@@ -241,6 +252,9 @@ public abstract class GenericJpaDaoImpl<T extends PersistableObject> implements 
      */
     public T update(final T t) {
 		try{
+			if(em==null || !em.isOpen()){
+				em = PersistenceService.getInstance().createEntityManager();
+			}
 			//if object doesn't exist, create it.
 			if(t.getId() == null){
 				em.getTransaction().begin();
@@ -268,6 +282,9 @@ public abstract class GenericJpaDaoImpl<T extends PersistableObject> implements 
      */
 	public void delete(T o) {
 		try{
+			if(em==null || !em.isOpen()){
+				em = PersistenceService.getInstance().createEntityManager();
+			}
 			em.getTransaction().begin();
 			this.em.remove(o);
 			em.getTransaction().commit();
@@ -284,6 +301,9 @@ public abstract class GenericJpaDaoImpl<T extends PersistableObject> implements 
 	 * @param id
 	 */
     public void deleteById(final Object id) {
+    	if(em==null || !em.isOpen()){
+			em = PersistenceService.getInstance().createEntityManager();
+		}
         T t = this.em.find(type, id);
         if(t!=null){
         	delete(t);

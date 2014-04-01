@@ -23,5 +23,14 @@ public interface TriggerWorkflowMappingDao extends GenericDao<TriggerWorkflowMap
 	 * @return
 	 */
 	public ResultsSet<TriggerWorkflowMapping> findByTriggerNames(QueryParameters queryParameters,List<String> triggerNames);
+	
+	/**
+	 * find specific entry by trigger name and workflow
+	 * @param queryParameters
+	 * @param triggerName
+	 * @param workflow
+	 * @return
+	 */
+	public TriggerWorkflowMapping findByTriggerNameAndWorkflow(String triggerName, String workflow);
 
 }
