@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLinkType;
 import org.apache.log4j.Logger;
 
 import com.openshare.service.base.constants.OpenShareConstants;
+import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.service.base.rpc.MethodHandler;
 import com.openshare.service.base.rpc.OpenShareResponse;
 import com.openshare.service.base.rpc.impl.palyoad.process.instance.WorkflowInstanceTriggerPayload;
@@ -33,7 +36,7 @@ public class WorkflowInstanceTriggerHandler  extends MethodHandler<WorkflowInsta
 
 	@Override
 	protected OpenShareResponse executeWithConvertedPayload(
-			WorkflowInstanceTriggerPayload convertedPayload) {
+			WorkflowInstanceTriggerPayload convertedPayload) throws OpenshareException {
 		//get hold of the execution engine
 		ActivitiHelper activityHelper = ActivitiHelper.getInstance();
 		ProcessEngine engine = activityHelper.getProcessEngine();
@@ -43,6 +46,18 @@ public class WorkflowInstanceTriggerHandler  extends MethodHandler<WorkflowInsta
 		ResultsSet<TriggerWorkflowMapping> workflowMappings = dao.findByTriggerNames(null, triggerNames);
 		logger.info("found " + workflowMappings.getNumberOfResults() + " mappings, triggering all workflows");
 		List<String> processIds = new ArrayList<String>();
+		for(TriggerWorkflowMapping mapping : workflowMappings.getResults()){
+			try{
+				RepositoryService reposService = engine.getRepositoryService();
+				ProcessDefinition def = reposService.createProcessDefinitionQuery().processDefinitionKey(mapping.getWorkflowName()).singleResult();
+				if(def==null){
+					throw new OpenshareException("No process definition for workflow " + mapping.getWorkflowName() + " found");
+				}
+			}
+			catch(Throwable t){
+				throw new OpenshareException("Failed to validate requested proces definitions, cause:",t);
+			}
+		}
 		for(TriggerWorkflowMapping mapping : workflowMappings.getResults()){
 			//find definition from deployment id
 			RuntimeService runtimeService = engine.getRuntimeService();

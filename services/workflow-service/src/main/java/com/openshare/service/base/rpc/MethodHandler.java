@@ -46,7 +46,7 @@ public abstract class MethodHandler<T> {
 		}
 	}
 	
-	protected abstract OpenShareResponse executeWithConvertedPayload(T convertedPayload);
+	protected abstract OpenShareResponse executeWithConvertedPayload(T convertedPayload) throws OpenshareException;
 	
 	protected T getEntryFromPayload() throws OpenshareException{
 		try{

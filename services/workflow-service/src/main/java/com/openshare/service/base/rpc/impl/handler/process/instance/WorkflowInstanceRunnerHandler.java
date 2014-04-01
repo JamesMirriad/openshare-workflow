@@ -8,6 +8,7 @@ import org.activiti.engine.task.IdentityLinkType;
 import org.apache.log4j.Logger;
 
 import com.openshare.service.base.constants.OpenShareConstants;
+import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.service.base.rpc.MethodHandler;
 import com.openshare.service.base.rpc.OpenShareResponse;
 import com.openshare.workflow.conf.ActivitiHelper;
@@ -23,7 +24,7 @@ public class WorkflowInstanceRunnerHandler  extends MethodHandler<String> {
 
 	@Override
 	protected OpenShareResponse executeWithConvertedPayload(
-			String convertedPayload) {
+			String convertedPayload) throws OpenshareException{
 		//get hold of the execution engine
 		ActivitiHelper activityHelper = ActivitiHelper.getInstance();
 		ProcessEngine engine = activityHelper.getProcessEngine();

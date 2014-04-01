@@ -1,5 +1,6 @@
 package com.openshare.service.base.rpc.impl.handler.mapping;
 
+import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.service.base.rpc.MethodHandler;
 import com.openshare.service.base.rpc.OpenShareResponse;
 import com.openshare.service.base.rpc.StatusEnum;
@@ -14,7 +15,7 @@ public class WorkflowMappingListHandler extends MethodHandler<Object> {
 
 	@Override
 	protected OpenShareResponse executeWithConvertedPayload(
-			Object convertedPayload) {
+			Object convertedPayload) throws OpenshareException{
 		
 		OpenShareResponse response = new OpenShareResponse();
 		

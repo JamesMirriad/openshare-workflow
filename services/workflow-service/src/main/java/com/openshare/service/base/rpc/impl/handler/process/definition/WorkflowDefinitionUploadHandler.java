@@ -5,6 +5,7 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
 import org.apache.log4j.Logger;
 
+import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.service.base.rpc.MethodHandler;
 import com.openshare.service.base.rpc.OpenShareResponse;
 import com.openshare.service.base.rpc.impl.palyoad.process.definition.WorkFlowDefinitionPayload;
@@ -20,7 +21,7 @@ public class WorkflowDefinitionUploadHandler extends MethodHandler<WorkFlowDefin
 
 	@Override
 	protected OpenShareResponse executeWithConvertedPayload(
-			WorkFlowDefinitionPayload convertedPayload) {
+			WorkFlowDefinitionPayload convertedPayload) throws OpenshareException{
 		//get hold of the execution engine
 		ActivitiHelper activityHelper = ActivitiHelper.getInstance();
 		ProcessEngine engine = activityHelper.getProcessEngine();

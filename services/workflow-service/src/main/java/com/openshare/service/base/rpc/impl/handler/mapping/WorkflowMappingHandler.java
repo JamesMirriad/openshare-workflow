@@ -1,5 +1,6 @@
 package com.openshare.service.base.rpc.impl.handler.mapping;
 
+import com.openshare.service.base.exception.OpenshareException;
 import com.openshare.service.base.rpc.MethodHandler;
 import com.openshare.service.base.rpc.OpenShareResponse;
 import com.openshare.service.base.rpc.StatusEnum;
@@ -8,13 +9,12 @@ import com.openshare.service.base.rpc.impl.palyoad.mapping.TriggerWorkflowMappin
 import com.openshare.workflow.domain.TriggerWorkflowMapping;
 import com.openshare.workflow.persistence.DaoFactory;
 import com.openshare.workflow.persistence.dao.TriggerWorkflowMappingDao;
-import com.openshare.workflow.persistence.results.ResultsSet;
 
 public class WorkflowMappingHandler extends MethodHandler<TriggerWorkflowMappingPayload> {
 
 	@Override
 	protected OpenShareResponse executeWithConvertedPayload(
-			TriggerWorkflowMappingPayload convertedPayload) {
+			TriggerWorkflowMappingPayload convertedPayload) throws OpenshareException{
 		
 		OpenShareResponse response = new OpenShareResponse();
 		
