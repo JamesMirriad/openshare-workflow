@@ -42,15 +42,15 @@ public class Move extends AbstractJavaDelegateService {
 			sourceFile.moveTo(targetFile);
 			logger.info("move completed");
 			//set target variable name
-			if(targetFileVariable!=null && !targetFileVariable.isEmpty()){
-				execution.setVariable(targetFileVariable, targetFileUri);
+			if(targetFileVariable!=null && !targetFileVariable.isEmpty() && !sourceFileUri.equals(".")){
+				execution.setVariable(targetFileVariable, targetFile.getFullPathName());
 			}
 			else{
-				execution.setVariable(WorkflowConstants.SOURCE_FILE, targetFileUri);
+				execution.setVariable(WorkflowConstants.SOURCE_FILE, targetFile.getFullPathName());
 			}
 		} 
 		catch (FileUtilException e) {
-			throw new OpenshareException("Failed to delete file, cause:",e);
+			throw new OpenshareException("Failed to move file, cause:",e);
 		}
 	}
 
@@ -62,6 +62,9 @@ public class Move extends AbstractJavaDelegateService {
 				"<activiti:string>${value}</activiti:string>" +
 				"</activiti:field>" +
 				"<activiti:field name=\"target\">" +
+				"<activiti:string>${value}</activiti:string>" +
+				"</activiti:field>" +
+				"<activiti:field name=\"targetVariableName\">" +
 				"<activiti:string>${value}</activiti:string>" +
 				"</activiti:field>" +
 				"</extensionElements>" +

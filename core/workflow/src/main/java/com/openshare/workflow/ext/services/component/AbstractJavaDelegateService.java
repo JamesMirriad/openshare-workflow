@@ -42,7 +42,7 @@ public abstract class AbstractJavaDelegateService implements JavaDelegate, IWork
     		handleExecution(execution);
     	}
     	catch(Throwable t){
-    		logger.error("Failed to execute " + this.getExecutorDisplayName() + " " + execution.getId() + " cause: "+ t);
+    		logger.error("Failed to execute " + this.getExecutorDisplayName() + " " + execution.getId() + " cause: "+t,t);
     		throw new BpmnError(WorkflowErrorConstants.PROCESS_ERROR, "Failed to execute " + this.getExecutorDisplayName() + " " + execution.getId() + " cause: "+ t);
     	}
 		

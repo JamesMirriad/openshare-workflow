@@ -54,10 +54,12 @@ public class DiskFile extends FileAbstractVfsImpl implements Serializable {
 	 */
 	public String getFullPathName(){
 		String fullPath = new String(rootName + File.separator + this.filePath);
-		if(!fullPath.endsWith(File.separator)){
+		if(!fullPath.endsWith("\\") && !fullPath.endsWith("/")){
 			fullPath = fullPath.concat(File.separator);
 		}
-		fullPath = fullPath.concat(this.fileName);
+		if(this.fileName!=null){
+			fullPath = fullPath.concat(this.fileName);
+		}
 		return fullPath;
 	}
 	

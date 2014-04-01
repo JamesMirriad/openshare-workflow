@@ -49,7 +49,7 @@ public class WorkflowInstanceTriggerHandler  extends MethodHandler<WorkflowInsta
 		for(TriggerWorkflowMapping mapping : workflowMappings.getResults()){
 			try{
 				RepositoryService reposService = engine.getRepositoryService();
-				ProcessDefinition def = reposService.createProcessDefinitionQuery().processDefinitionKey(mapping.getWorkflowName()).singleResult();
+				ProcessDefinition def = reposService.createProcessDefinitionQuery().processDefinitionKey(mapping.getWorkflowName()).latestVersion().singleResult();
 				if(def==null){
 					throw new OpenshareException("No process definition for workflow " + mapping.getWorkflowName() + " found");
 				}
@@ -63,7 +63,7 @@ public class WorkflowInstanceTriggerHandler  extends MethodHandler<WorkflowInsta
 			RuntimeService runtimeService = engine.getRuntimeService();
 			Map<String,Object> processVariables = new HashMap<String,Object>();
 			processVariables.put(WorkflowConstants.SOURCE_FILE, convertedPayload.getFileUri());
-			final ProcessInstance process = runtimeService.startProcessInstanceByKey(mapping.getWorkflowName());
+			final ProcessInstance process = runtimeService.startProcessInstanceByKey(mapping.getWorkflowName(),processVariables);
 			//assign sysadmin as default owner
 			runtimeService.addUserIdentityLink(process.getId(), OpenShareConstants.DEFAULT_USER, IdentityLinkType.OWNER);
 			runtimeService.addUserIdentityLink(process.getId(), OpenShareConstants.DEFAULT_USER, IdentityLinkType.STARTER);

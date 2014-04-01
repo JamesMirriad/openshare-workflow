@@ -42,11 +42,11 @@ public class Copy extends AbstractJavaDelegateService {
 			targetFile.copyFrom(sourceFile);
 			logger.info("copy completed");
 			if(targetFileVariable!=null && !targetFileVariable.isEmpty()){
-				execution.setVariable(targetFileVariable, targetFileUri);
+				execution.setVariable(targetFileVariable, targetFile.getFullPathName());
 			}
 		} 
 		catch (FileUtilException e) {
-			throw new OpenshareException("Failed to delete file, cause:",e);
+			throw new OpenshareException("Failed to copy file, cause:",e);
 		}
 	}
 

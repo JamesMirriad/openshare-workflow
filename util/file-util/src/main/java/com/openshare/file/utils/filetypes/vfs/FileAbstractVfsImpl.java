@@ -395,6 +395,9 @@ public abstract class FileAbstractVfsImpl implements FileSystemObject,Cloneable,
 		if(!target.canWrite()){
 			throw new FileUtilException("cannot move to a write protected folder/file");
 		}
+		if(target.isFolder()){
+			target.setParamsFromUri(target.getFullPathName()+this.getFileName());
+		}
 		//create a VFS cast
 		FileAbstractVfsImpl cast;
 		if(target instanceof FileAbstractVfsImpl){
@@ -439,6 +442,10 @@ public abstract class FileAbstractVfsImpl implements FileSystemObject,Cloneable,
 		}
 		if(!this.canWrite()){
 			throw new FileUtilException("cannot copy to a folder/file that doesn't have write permissions");
+		}
+		if(this.isFolder() && !source.isFolder()){
+			//copying into a folder, so reset so target is a file path
+			this.setParamsFromUri(this.getFullPathName()+source.getFileName());
 		}
 		FileAbstractVfsImpl cast;
 		if(source instanceof FileAbstractVfsImpl){
