@@ -38,6 +38,7 @@ public class WorkflowInstanceTriggerHandler  extends MethodHandler<WorkflowInsta
 	protected OpenShareResponse executeWithConvertedPayload(
 			WorkflowInstanceTriggerPayload convertedPayload) throws OpenshareException {
 		//get hold of the execution engine
+		logger.info("attempting to run trigger: " + convertedPayload.getTriggerName()+ " on file " + convertedPayload.getFileUri());
 		ActivitiHelper activityHelper = ActivitiHelper.getInstance();
 		ProcessEngine engine = activityHelper.getProcessEngine();
 		TriggerWorkflowMappingDao dao = DaoFactory.getInstance().getTriggerWorkflowMappingDao();
