@@ -3,6 +3,7 @@ package com.openshare.service.base.rpc.impl.handler.process.definition;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.log4j.Logger;
 
 import com.openshare.service.base.exception.OpenshareException;
@@ -38,7 +39,8 @@ public class WorkflowDefinitionUploadHandler extends MethodHandler<WorkFlowDefin
 		logger.info("created new deploymet with id:" + deployment.getId() + " name: " + deployment.getName());
 		OpenShareResponse response = new OpenShareResponse();
 		response.setTxid(this.getTransactionId());
-		response.setPayload(deployment.getId());
+		ProcessDefinition definition = engine.getRepositoryService().createProcessDefinitionQuery().deploymentId(deployment.getId()).latestVersion().singleResult();
+		response.setPayload(definition.getKey());
 		return response;
 	}
 
