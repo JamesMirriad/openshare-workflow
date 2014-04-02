@@ -14,6 +14,7 @@ import com.openshare.service.base.rpc.impl.handler.process.instance.WorkflowInst
 import com.openshare.service.base.rpc.impl.palyoad.mapping.TriggerWorkflowMappingPayload;
 import com.openshare.service.base.rpc.impl.palyoad.process.definition.WorkFlowDefinitionPayload;
 import com.openshare.service.base.rpc.impl.palyoad.process.instance.WorkflowInstanceResumePayload;
+import com.openshare.service.base.rpc.impl.palyoad.process.instance.WorkflowInstanceRunPayload;
 import com.openshare.service.base.rpc.impl.palyoad.process.instance.WorkflowInstanceTriggerPayload;
 /**
  * default service methods, if no service method is defined to override this in the factory, then these are the ones used.
@@ -28,7 +29,7 @@ public enum ServiceMethodMapper {
 	WORKFLOW_ADD		("add",		WorkFlowDefinitionPayload.class,		WorkflowDefinitionUploadHandler.class),
 	WORKFLOW_DELETE		("remove",	String.class,							WorkflowDefinitionRemovalHandler.class),
 	//workflow instance operations
-	WORKFLOW_RUN		("run",		String.class,							WorkflowInstanceRunnerHandler.class),
+	WORKFLOW_RUN		("run",		WorkflowInstanceRunPayload.class,		WorkflowInstanceRunnerHandler.class),
 	WORKFLOW_SUSPEND	("stop",	String.class,							WorkflowInstanceSuspenderHandler.class),
 	WORKFLOW_RESUME 	("resume",	WorkflowInstanceResumePayload.class,	WorkflowInstanceResumeHandler.class),
 	//trigger operations that use the trigger-workflow map to instantiate workflows
