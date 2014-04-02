@@ -60,6 +60,11 @@ public class DiskFile extends FileAbstractVfsImpl implements Serializable {
 		if(this.fileName!=null){
 			fullPath = fullPath.concat(this.fileName);
 		}
+		if(!fullPath.contains(":\\") && !fullPath.contains("://")){
+			if(!fullPath.startsWith("/")){
+				fullPath = "/".concat(fullPath);
+			}
+		}
 		return fullPath;
 	}
 	
