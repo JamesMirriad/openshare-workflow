@@ -1,5 +1,10 @@
 package com.openshare.util.parse;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -49,11 +54,66 @@ public class VariableParser {
 		if(expression==null || expression.isEmpty()){
 			return expression;
 		}
-		for(Map.Entry<String, Object> entry : replacementMap.entrySet()){
-			String replaceString = "${"+entry.getKey()+"}";
-			String replacement = entry.getValue().toString();
-			expression = expression.replace(replaceString, replacement);
+		//check map replacements
+		if(expression!=null && !expression.isEmpty() && replacementMap!=null){
+			for(Map.Entry<String, Object> entry : replacementMap.entrySet()){
+				String replaceString = "${"+entry.getKey()+"}";
+				String replacement = entry.getValue().toString();
+				expression = expression.replace(replaceString, replacement);
+			}
 		}
+		expression = doFixedReplacements(expression);
+		return expression;
+	}
+	
+	/**
+	 * does fixed replacements only
+	 * @param expression
+	 * @return
+	 */
+	public static String doFixedReplacements(String expression){
+		//do fixed variable expressions
+		//setup the fixed values
+		Date date = new Date();
+		DateFormat dfDate = new SimpleDateFormat("yyyyMMdd");
+		DateFormat dfTime = new SimpleDateFormat("HHmmss");
+		DateFormat dfYear = new SimpleDateFormat("yyyy");
+		DateFormat dfMonth = new SimpleDateFormat("mm");
+		DateFormat dfDay = new SimpleDateFormat("dd");
+		DateFormat dfHour = new SimpleDateFormat("HH");
+		DateFormat dfMin = new SimpleDateFormat("mm");
+		DateFormat dfSec = new SimpleDateFormat("ss");
+		
+		InetAddress addr;
+		String host;
+		String ip;
+		try {
+			addr = InetAddress.getLocalHost();
+			host = addr.getHostName();
+		} 
+		catch (UnknownHostException e) {
+			host = "unknown_host";
+		}
+		try {
+			addr = InetAddress.getLocalHost();
+			ip = addr.getHostAddress();
+		} 
+		catch (UnknownHostException e) {
+			ip = "unknown_ip";
+		}
+		//time replacement
+		expression = expression.replace("#{date}", dfDate.format(date));
+		expression = expression.replace("#{time}", dfTime.format(date));
+		expression = expression.replace("#{year}", dfYear.format(date));
+		expression = expression.replace("#{month}", dfMonth.format(date));
+		expression = expression.replace("#{day}", dfDay.format(date));
+		expression = expression.replace("#{hour}", dfHour.format(date));
+		expression = expression.replace("#{minute}", dfMin.format(date));
+		expression = expression.replace("#{second}", dfSec.format(date));
+		//host replacement
+		expression = expression.replace("#{host}", host);
+		expression = expression.replace("#{ip}", ip);
+		
 		return expression;
 	}
 }

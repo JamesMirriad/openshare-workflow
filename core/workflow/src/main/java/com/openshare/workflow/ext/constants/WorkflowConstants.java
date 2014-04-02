@@ -15,6 +15,11 @@ public class WorkflowConstants {
 	
 	//definitions of constants in workflows
 	public static final String SOURCE_FILE							= "sourceFile";
+	public static final String SOURCE_FILE_NAME						= "sourceFileName";
+	public static final String SOURCE_FILE_EXT						= "sourceFileExt";
+	public static final String SOURCE_FILE_NAME_NO_EXT				= "sourceFileNameOnly";
+	
+	
 	//Callback variable for async process
 	public static final String CALLBACK_OBJECT			 			= "CallBackObjectVariable";
 

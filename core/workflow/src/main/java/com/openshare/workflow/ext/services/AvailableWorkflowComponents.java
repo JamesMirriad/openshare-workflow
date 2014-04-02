@@ -10,6 +10,8 @@ import com.openshare.workflow.ext.services.component.file.Copy;
 import com.openshare.workflow.ext.services.component.file.Delete;
 import com.openshare.workflow.ext.services.component.file.Move;
 import com.openshare.workflow.ext.services.component.impl.demo.DemoConsoleDumper;
+import com.openshare.workflow.ext.services.component.variable.IngestFileInformation;
+import com.openshare.workflow.ext.services.component.variable.SetVariable;
 /**
  * Enumerative class that contains all the workflow components that are accessible via the 
  * config call. All implement workflow components should be listed here so they can be used to create 
@@ -21,6 +23,8 @@ public enum AvailableWorkflowComponents {
 
 	DEMO_CONSOLE_DUMPER	(DemoConsoleDumper.class),
 	COMMAND_LINE_EXEC	(CommandLineExecutor.class),
+	SET_VARIABLE		(SetVariable.class),
+	INGEST_FILE_INFO	(IngestFileInformation.class),
 	COPY_FILE			(Copy.class),
 	MOVE_FILE			(Move.class),
 	DELETE_FILE			(Delete.class);

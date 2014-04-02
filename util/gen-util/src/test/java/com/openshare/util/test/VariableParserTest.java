@@ -56,4 +56,17 @@ public class VariableParserTest {
 		Assert.assertTrue("this line contains cat and dog but also rat".equals(result));
 	}
 	
+	@Test
+	public void test5() {
+		String lineToParse = "this line was checked at #{date}#{time}";
+		String result = VariableParser.replaceVariablesInExpression(lineToParse, null);
+		System.out.println(result);
+	}
+	
+	@Test
+	public void test6() {
+		String lineToParse = "this line was checked on #{host}";
+		String result = VariableParser.replaceVariablesInExpression(lineToParse, null);
+		System.out.println(result);
+	}
 }
