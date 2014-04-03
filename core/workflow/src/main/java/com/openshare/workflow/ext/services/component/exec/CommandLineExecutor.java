@@ -37,11 +37,11 @@ public class CommandLineExecutor extends AbstractJavaDelegateService {
 			logger.info("running command: " + executionCommandParsed);
 			//run the command
 			Process p = Runtime.getRuntime().exec(executionCommandParsed);
+		    BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		    BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 			//wait for command to complete
 			p.waitFor();
 			 
-		    BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		    BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 		    
 		    int exitValue = p.exitValue();
 		    //log output of operation

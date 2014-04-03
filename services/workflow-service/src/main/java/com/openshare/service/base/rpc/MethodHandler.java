@@ -42,6 +42,7 @@ public abstract class MethodHandler<T> {
 			return executeWithConvertedPayload(payloadConverted);
 		}
 		catch(Throwable t){
+			logger.error("Failed to execute method handler, cause:",t);
 			throw new OpenshareException("Failed to execute method handler, cause:",t);
 		}
 	}

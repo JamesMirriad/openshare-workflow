@@ -39,7 +39,12 @@ public class Copy extends AbstractJavaDelegateService {
 		try {
 			FileSystemObject sourceFile = FileFactory.GetInstance().create(sourceFileUri);
 			FileSystemObject targetFile = FileFactory.GetInstance().create(targetFileUri);
-			targetFile.copyFrom(sourceFile);
+			if(sourceFile.exists() && sourceFile.canRead()){
+				targetFile.copyFrom(sourceFile);
+			}
+			else{
+				throw new OpenshareException("file " + sourceFileUri + " does not exist or we don't have read permissions");
+			}
 			logger.info("copy completed");
 			if(targetFileVariable!=null && !targetFileVariable.isEmpty()){
 				execution.setVariable(targetFileVariable, targetFile.getFullPathName());

@@ -39,7 +39,12 @@ public class Move extends AbstractJavaDelegateService {
 		try {
 			FileSystemObject sourceFile = FileFactory.GetInstance().create(sourceFileUri);
 			FileSystemObject targetFile = FileFactory.GetInstance().create(targetFileUri);
-			sourceFile.moveTo(targetFile);
+			if(sourceFile.exists() && sourceFile.canRead()){
+				sourceFile.moveTo(targetFile);
+			}
+			else{
+				throw new OpenshareException("file " + sourceFileUri + " does not exist or we don't have read permissions");
+			}
 			logger.info("move completed");
 			//set target variable name
 			if(targetFileVariable!=null && !targetFileVariable.isEmpty() && !sourceFileUri.equals(".")){
