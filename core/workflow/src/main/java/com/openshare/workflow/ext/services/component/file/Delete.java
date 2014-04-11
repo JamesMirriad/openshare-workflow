@@ -32,8 +32,15 @@ public class Delete extends AbstractJavaDelegateService {
 		}
 		try {
 			FileSystemObject sourceFile = FileFactory.GetInstance().create(sourceFileUri);
-			sourceFile.delete();
-			logger.info("delete completed");
+			//source file exists and MUST have read access to delete.
+			if(sourceFile.exists() && sourceFile.canWrite()){
+				sourceFile.delete();
+				logger.info("delete completed");
+			}
+			else{
+				logger.error("file " + sourceFileUri + " does not exist or we don't have read permissions");
+				throw new OpenshareException("file " + sourceFileUri + " does not exist or we don't have read permissions");
+			}
 		} 
 		catch (FileUtilException e) {
 			throw new OpenshareException("Failed to delete file, cause:",e);

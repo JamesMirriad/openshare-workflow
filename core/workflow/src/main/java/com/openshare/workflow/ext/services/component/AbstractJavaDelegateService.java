@@ -11,8 +11,8 @@ import org.activiti.engine.delegate.JavaDelegate;
 import org.apache.log4j.Logger;
 
 import com.openshare.service.base.exception.OpenshareException;
-import com.openshare.util.parse.VariableParser;
 import com.openshare.workflow.ext.constants.WorkflowErrorConstants;
+import com.openshare.workflow.util.VariableParser;
 
 /**
  * Class to execute a synchronous command. Use this if the operation

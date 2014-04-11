@@ -16,10 +16,10 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.openshare.service.base.exception.OpenshareException;
-import com.openshare.util.parse.VariableParser;
 import com.openshare.workflow.ext.constants.WorkflowConstants;
 import com.openshare.workflow.ext.constants.WorkflowErrorConstants;
 import com.openshare.workflow.ext.exception.WorkflowException;
+import com.openshare.workflow.util.VariableParser;
 /**
  * this is a abstract template for operations within the system. Please extend this class 
  * with custom operations, using te worker threads to hand off to long running processes

@@ -51,9 +51,9 @@ public class WorkflowInstanceRunnerHandler  extends MethodHandler<WorkflowInstan
 		
 		RuntimeService runtimeService = engine.getRuntimeService();
 		final ProcessInstance process = runtimeService.startProcessInstanceById(definition.getId(),processVariables);
-		//assign sysadmin as default owner
-		runtimeService.addUserIdentityLink(process.getId(), OpenShareConstants.DEFAULT_USER, IdentityLinkType.OWNER);
-		runtimeService.addUserIdentityLink(process.getId(), OpenShareConstants.DEFAULT_USER, IdentityLinkType.STARTER);
+		//assign sysadmin as default owner -> this seems to crash, as it's only seemingly set after the process has finished executing
+//		runtimeService.addUserIdentityLink(process.getId(), OpenShareConstants.DEFAULT_USER, IdentityLinkType.OWNER);
+//		runtimeService.addUserIdentityLink(process.getId(), OpenShareConstants.DEFAULT_USER, IdentityLinkType.STARTER);
 		//return whatever we need to here...
 		response.setTxid(this.getTransactionId());
 		response.setStatus(StatusEnum.OK);
